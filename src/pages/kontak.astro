@@ -1,0 +1,120 @@
+---
+import Base from "../layouts/Base.astro";
+import { Image } from "astro:assets";
+import Icon from "../components/Icon.astro";
+import { services, site, wa } from "../data/site";
+import birds from "../assets/photos/birds-plain.png";
+---
+<Base title="Kontak" description="Hubungi MyBrain Indonesia via WhatsApp atau email untuk Individual Profile, Team Profile, In-house Workshop, dan Practitioner Certification." headerTone="cream">
+  <section class="contact">
+    <div class="copy">
+      <h1 class="title">Let’s<br />Connect</h1>
+      <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <p class="lead">Untuk profiling, kerja sama, atau diskusi program — tinggalkan pesan dan tim kami akan membalas lewat WhatsApp.</p>
+
+      <form class="form" data-wa-form>
+        <label>
+          <span>Nama</span>
+          <input name="nama" required autocomplete="name" placeholder="Nama lengkap" />
+        </label>
+        <label>
+          <span>Instansi / Organisasi <em>(opsional)</em></span>
+          <input name="instansi" autocomplete="organization" placeholder="Perusahaan, kampus, sekolah…" />
+        </label>
+        <fieldset>
+          <legend>Saya tertarik dengan</legend>
+          <div class="opts">
+            {services.map((s, i) => (
+              <label class="opt" style={`--c:${s.color}`}>
+                <input type="radio" name="layanan" value={s.title} checked={i === 0} />
+                <span><Icon name={s.icon} size={18} /> {s.title}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <label>
+          <span>Pesan <em>(opsional)</em></span>
+          <textarea name="pesan" rows="3" placeholder="Jumlah peserta, jadwal yang diinginkan, atau pertanyaan lain"></textarea>
+        </label>
+        <button class="btn btn-orange" type="submit"><Icon name="whatsapp" size={20} /> Kirim via WhatsApp</button>
+        <p class="fine">Tombol ini membuka WhatsApp dengan pesan yang sudah terisi — tidak ada data yang kami simpan di website.</p>
+      </form>
+    </div>
+
+    <div class="art">
+      <Image src={birds} alt="" widths={[400, 578]} sizes="(min-width: 900px) 45vw, 100vw" loading="eager" />
+      <div class="card">
+        <a href={wa("general")} target="_blank" rel="noopener"><span class="i"><Icon name="whatsapp" size={20} /></span> {site.phoneDisplay}</a>
+        <a href={`mailto:${site.email}`}><span class="i"><Icon name="mail" size={20} /></span> {site.email}</a>
+        <span><span class="i"><Icon name="globe" size={20} /></span> www.mybrain.id</span>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact { display: grid; background: var(--cream); }
+  .copy {
+    display: grid; gap: 1.2rem; justify-items: start; align-content: start;
+    padding: clamp(2rem, 5vw, 4rem) var(--gutter) clamp(3rem, 6vw, 5rem);
+  }
+  .title { font-size: clamp(3.2rem, 2rem + 5vw, 6rem); font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; }
+  .form { display: grid; gap: 1rem; width: 100%; max-width: 560px; margin-top: 1rem; }
+  label > span, legend { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.35rem; }
+  em { font-weight: 400; color: var(--muted); }
+  input:not([type="radio"]), textarea {
+    width: 100%; font: inherit; font-size: 0.95rem; padding: 0.8rem 1rem;
+    border-radius: 12px; border: 1.5px solid var(--line-strong); background: #fff; color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--olive); box-shadow: 0 0 0 4px color-mix(in srgb, var(--olive) 20%, transparent); }
+  fieldset { border: 0; padding: 0; margin: 0; }
+  .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .opt { position: relative; cursor: pointer; }
+  .opt input { position: absolute; opacity: 0; }
+  .opt span {
+    display: flex !important; align-items: center; gap: 0.45rem; margin: 0 !important;
+    padding: 0.75rem 0.85rem; border-radius: 12px; border: 1.5px solid var(--line-strong); background: #fff;
+    font-size: 0.85rem !important; font-weight: 600 !important; line-height: 1.2; transition: all 0.2s;
+  }
+  .opt span :global(svg) { flex: none; color: var(--c); }
+  .opt input:checked + span { border-color: var(--c); background: var(--c); color: #fff; }
+  .opt input:checked + span :global(svg) { color: #fff; }
+  .opt input:focus-visible + span { outline: 3px solid var(--orange); outline-offset: 2px; }
+  .form .btn { justify-self: start; margin-top: 0.5rem; }
+  .fine { font-size: 0.78rem; color: var(--muted); }
+
+  .art { position: relative; min-height: 420px; background: var(--sun); overflow: hidden; display: grid; place-items: center; padding: 2rem var(--gutter); }
+  .art :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .card {
+    position: relative; z-index: 2; display: grid; gap: 1.1rem; padding: 1.75rem 2rem;
+    background: #fff; border-radius: 16px; border: 1.5px solid var(--olive);
+    box-shadow: var(--shadow); font-weight: 700; font-size: 0.98rem; transform: translateY(-30%);
+  }
+  .card a, .card > span { display: flex; align-items: center; gap: 0.8rem; }
+  .card a:hover { color: var(--orange); }
+  .i { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: color-mix(in srgb, var(--olive) 15%, #fff); color: var(--olive-deep); }
+
+  @media (min-width: 900px) {
+    .contact { grid-template-columns: 1.1fr 1fr; min-height: calc(100vh - 76px); }
+    .copy { padding-left: max(var(--gutter), calc((100vw - var(--wrap)) / 2)); padding-right: 3rem; }
+    .art { border-left: 2px solid rgba(17, 17, 17, 0.25); place-items: start; padding-top: 12vh; overflow: visible; }
+    .card { transform: translateX(-35%); }
+  }
+</style>
+
+<script>
+  import { site } from "../data/site";
+  const form = document.querySelector<HTMLFormElement>("[data-wa-form]")!;
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const lines = [
+      `Halo MyBrain Indonesia, saya ${d.get("nama")}${d.get("instansi") ? ` dari ${d.get("instansi")}` : ""}.`,
+      `Saya tertarik dengan ${d.get("layanan")}.`,
+      d.get("pesan") ? `\n${d.get("pesan")}` : "",
+    ];
+    const url = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(lines.join("\n").trim())}`;
+    window.open(url, "_blank", "noopener");
+  });
+</script>

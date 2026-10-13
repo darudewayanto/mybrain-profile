@@ -1,0 +1,102 @@
+---
+// Interactive version of the official quadrant artwork: pick a quadrant to read what it means.
+import { Image } from "astro:assets";
+import quadrant from "../assets/brand/quadrant.png";
+import { quadrants } from "../data/site";
+// Hotspot positions follow the artwork: Reasoning top-left, Spontaneous top-right, Specific bottom-left, Feeling bottom-right.
+const pos = { reasoning: "tl", spontaneous: "tr", specific: "bl", feeling: "br" } as const;
+---
+<div class="qx" data-qx>
+  <div class="art">
+    <Image src={quadrant} alt="Empat kuadran MyBrain: Reasoning, Spontaneous, Specific, Feeling" widths={[360, 561]} sizes="(min-width: 900px) 440px, 86vw" />
+    {quadrants.map((q, i) => (
+      <button
+        class={`hot ${pos[q.key]}`}
+        type="button"
+        aria-controls={`qpanel-${q.key}`}
+        aria-pressed={i === 0 ? "true" : "false"}
+        style={`--c:${q.color}`}
+        data-q={q.key}
+      >
+        <span class="sr-only">{q.name}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="panels">
+    <div class="chips" role="group" aria-label="Pilih kuadran">
+      {quadrants.map((q, i) => (
+        <button type="button" class="chip" style={`--c:${q.color}`} data-q={q.key} aria-pressed={i === 0 ? "true" : "false"}>{q.name}</button>
+      ))}
+    </div>
+    {quadrants.map((q, i) => (
+      <article class="panel" id={`qpanel-${q.key}`} aria-live="polite" style={`--c:${q.color}`} hidden={i !== 0}>
+        <p class="word">{q.word}</p>
+        <h3 class="h3">{q.name}</h3>
+        <p class="short">{q.short}</p>
+        <p>{q.text}</p>
+        <ul role="list">{q.traits.map((t) => <li>{t}</li>)}</ul>
+      </article>
+    ))}
+    <p class="note">Setiap orang memiliki keempat kuadran — profil MyBrain menunjukkan <strong>komposisi dan dominansinya</strong>, bukan label.</p>
+  </div>
+</div>
+
+<style>
+  .qx { display: grid; gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+  @media (min-width: 900px) { .qx { grid-template-columns: minmax(0, 440px) 1fr; } }
+
+  .art { position: relative; width: min(100%, 440px); justify-self: center; }
+  .art :global(img) { width: 100%; height: auto; filter: drop-shadow(0 20px 30px rgba(15, 19, 51, 0.18)); }
+  .hot {
+    position: absolute;
+    width: 40%; height: 40%;
+    border: 0; padding: 0; background: transparent; cursor: pointer;
+    border-radius: 24px;
+    transition: background 0.25s, box-shadow 0.25s;
+  }
+  .hot.tl { left: 0; top: 0; } .hot.tr { right: 0; top: 0; }
+  .hot.bl { left: 0; bottom: 0; } .hot.br { right: 0; bottom: 0; }
+  .hot:hover { background: rgba(255, 255, 255, 0.12); }
+  .hot[aria-pressed="true"] { box-shadow: 0 0 0 4px var(--c); }
+
+  .panels { display: grid; gap: 1.25rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .chip {
+    border: 2px solid var(--c); background: transparent; color: var(--ink);
+    padding: 0.45rem 1rem; border-radius: 999px; font-weight: 600; font-size: 0.85rem; cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .chip[aria-pressed="true"], .chip:hover { background: var(--c); color: #fff; }
+
+  .panel {
+    display: grid; gap: 0.75rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    border-top: 8px solid var(--c);
+    box-shadow: var(--shadow);
+    animation: pop 0.45s var(--ease);
+  }
+  .panel[hidden] { display: none; }
+  @keyframes pop { from { opacity: 0; transform: translateY(10px); } }
+  .panel .word { font-size: clamp(2.6rem, 6vw, 4rem); color: var(--c); }
+  .panel .h3 { font-size: 1.6rem; }
+  .short { font-weight: 600; color: var(--ink); }
+  .panel ul { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+  .panel li {
+    font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.8rem; border-radius: 999px;
+    background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c);
+  }
+  .note { font-size: 0.9rem; color: var(--muted); }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-qx]").forEach((root) => {
+    const show = (key: string) => {
+      root.querySelectorAll<HTMLElement>(".panel").forEach((p) => (p.hidden = p.id !== `qpanel-${key}`));
+      root.querySelectorAll<HTMLElement>("button[data-q]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.q === key)));
+    };
+    root.querySelectorAll<HTMLElement>("[data-q]").forEach((b) => b.addEventListener("click", () => show(b.dataset.q!)));
+  });
+</script>

@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import { u } from "../lib/url";
+---
+<Base title="Halaman tidak ditemukan">
+  <section class="section sand nf">
+    <div class="wrap">
+      <p class="word">anticipating blind-spot</p>
+      <h1 class="h1">404 — halaman ini <span class="t-orange">tidak ditemukan.</span></h1>
+      <p class="lead">Sepertinya tautan ini sudah berpindah. Kembali ke beranda untuk melanjutkan.</p>
+      <a class="btn btn-orange" href={u("/")}>Ke Beranda</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { min-height: 70vh; display: grid; align-items: center; }
+  .nf .wrap { display: grid; gap: 1.25rem; justify-items: start; }
+  .word { font-size: 2rem; color: var(--sky); }
+</style>

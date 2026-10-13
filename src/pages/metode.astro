@@ -1,0 +1,138 @@
+---
+import Base from "../layouts/Base.astro";
+import { Image } from "astro:assets";
+import PageHero from "../components/PageHero.astro";
+import QuadrantExplorer from "../components/QuadrantExplorer.astro";
+import ProfileSamples from "../components/ProfileSamples.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { problems } from "../data/site";
+import lensAnticipating from "../assets/photos/lens-anticipating.png";
+import quadrantBrain from "../assets/brand/quadrant-brain.png";
+import oranges from "../assets/photos/oranges.png";
+
+const pillars = [
+  { icon: "brain", title: "Physiology", text: "Berangkat dari cara kerja otak — neurological dominance — bukan sekadar persepsi diri." },
+  { icon: "chat", title: "Psychology", text: "Dipadukan dengan pendekatan psikometrik, sehingga hasilnya utuh dan mudah dipahami." },
+  { icon: "target", title: "Neuro-metric", text: "Dipetakan ke dalam 4 kuadran yang terukur, netral, dan dapat dibandingkan dalam tim." },
+];
+
+const differences = [
+  { not: "Satu pendekatan saja", yes: "Physiology + psychology dalam satu profil" },
+  { not: "Kesan ramalan / kartomansi", yes: "Penjelasan berbasis applied-neuroscience" },
+  { not: "Label yang menghakimi", yes: "Komposisi netral — semua kuadran bernilai" },
+  { not: "Berhenti di laporan", yes: "Diinterpretasi bersama practitioner tersertifikasi" },
+];
+---
+<Base title="Metode" description="Profiling Concept MyBrain: pendekatan applied-neuroscience dengan 4 kuadran Neurological-Dominance — Reasoning, Spontaneous, Specific, dan Feeling.">
+  <PageHero num="03" line1="Profiling" line2="Concept" accent="orange" image={lensAnticipating} imageAlt="Tiga potong jeruk bertumpuk di latar biru — anticipating blind-spot">
+    MyBrain adalah profiling tools dengan pendekatan <strong>applied-neuroscience</strong>, khususnya di area <em>neurological-dominance</em> atau <em>neuro-metric</em>. Profilnya memetakan Anda ke dalam 4 kuadran: Spontaneous, Reasoning, Specific, dan Feeling.
+  </PageHero>
+
+  <!-- Pillars -->
+  <section class="section">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow t-olive">Fondasi metode</p>
+        <h2 class="h2">Menggabungkan <span class="t-olive">physiology</span> dan <span class="t-orange">psychology</span></h2>
+      </div>
+      <div class="pillars">
+        {pillars.map((p, i) => (
+          <article class="pillar" data-reveal style={`--i:${i}`}>
+            <span class="ic"><Icon name={p.icon} size={26} /></span>
+            <h3 class="h3">{p.title}</h3>
+            <p>{p.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Quadrants -->
+  <section class="section cream">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow t-olive">4 kuadran</p>
+        <h2 class="h2">Neurological-<span class="t-orange">Dominance</span></h2>
+        <p class="lead">Setiap orang memakai keempat kuadran, tetapi dengan komposisi yang berbeda. Komposisi inilah yang membentuk cara kita belajar, memutuskan, berkomunikasi, dan memimpin.</p>
+      </div>
+      <div data-reveal><QuadrantExplorer /></div>
+    </div>
+  </section>
+
+  <!-- Instrument -->
+  <section class="section instrument">
+    <div class="wrap">
+      <div class="inst-head" data-reveal>
+        <Image src={quadrantBrain} alt="Instrumen MyBrain: empat kuadran di atas ilustrasi otak" widths={[300, 600]} sizes="(min-width: 900px) 300px, 60vw" class="brain" />
+        <div>
+          <p class="eyebrow t-olive">04</p>
+          <h2 class="h1">Brain<br /><span class="t-orange">Instrument</span></h2>
+          <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <p class="lead">Hasil profiling disajikan sebagai <strong>Individual Profile</strong> untuk setiap orang, dan <strong>Team Profile</strong> yang memetakan seluruh anggota tim dalam satu gambar.</p>
+        </div>
+      </div>
+      <div data-reveal><ProfileSamples /></div>
+    </div>
+  </section>
+
+  <!-- Why different -->
+  <section class="section sand why">
+    <div class="wrap why-grid">
+      <div data-reveal>
+        <p class="eyebrow t-olive">02 · The problem we solved</p>
+        <h2 class="h2">Bukan ramalan.<br /><span class="t-olive">Bukan label.</span></h2>
+        <p class="lead">MyBrain mengisi absennya layanan yang lengkap di area human profiling dan applied-neuroscience psychometric.</p>
+        <Image src={oranges} alt="" widths={[220, 344]} sizes="220px" class="oranges" />
+      </div>
+      <div class="table" data-reveal>
+        <div class="row th"><span>Tools pada umumnya</span><span>MyBrain</span></div>
+        {differences.map((d) => (
+          <div class="row">
+            <span class="no"><Icon name="close" size={16} /> {d.not}</span>
+            <span class="yes"><Icon name="check" size={16} /> {d.yes}</span>
+          </div>
+        ))}
+        <div class="quotes">
+          {problems.map((p) => <p><strong>{p.title}:</strong> <em>{p.quote}</em></p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand topic="individual" from="var(--sand)" title="Ingin melihat profil Anda sendiri?" />
+</Base>
+
+<style>
+  .head { display: grid; gap: 1rem; max-width: 760px; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+  .pillars { display: grid; gap: 1.25rem; }
+  @media (min-width: 820px) { .pillars { grid-template-columns: repeat(3, 1fr); } }
+  .pillar { display: grid; gap: 0.75rem; align-content: start; padding: 2rem; border-radius: var(--radius-lg); background: var(--cream); }
+  .ic { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 16px; background: var(--navy); color: #fff; }
+  .pillar:nth-child(2) .ic { background: var(--olive); }
+  .pillar:nth-child(3) .ic { background: var(--orange); }
+  .pillar p { color: var(--ink-soft); }
+
+  .instrument { background: var(--paper); }
+  .inst-head { display: grid; gap: 2rem; align-items: center; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .inst-head > div { display: grid; gap: 1.1rem; justify-items: start; }
+  .inst-head .h1 { font-weight: 900; letter-spacing: -0.04em; }
+  :global(.brain) { width: min(100%, 300px); height: auto; justify-self: center; }
+  @media (min-width: 900px) { .inst-head { grid-template-columns: 300px 1fr; gap: 4rem; } }
+
+  .why-grid { display: grid; gap: 3rem; align-items: start; }
+  .why-grid > div:first-child { display: grid; gap: 1.2rem; }
+  @media (min-width: 960px) { .why-grid { grid-template-columns: 1fr 1.2fr; } }
+  :global(.oranges) { width: clamp(110px, 16vw, 180px); height: auto; transform: rotate(-8deg); margin-top: 1rem; filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.15)); }
+  .table { border-radius: var(--radius-lg); background: #fff; overflow: hidden; box-shadow: var(--shadow); }
+  .row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+  .row span { display: flex; gap: 0.5rem; align-items: flex-start; padding: 1rem 1.25rem; font-size: 0.92rem; }
+  .row span :global(svg) { flex: none; margin-top: 0.2rem; }
+  .th span { font-weight: 800; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .th span:last-child { background: var(--navy); color: #fff; }
+  .no { color: var(--muted); }
+  .no :global(svg) { color: #c0392b; }
+  .yes { background: color-mix(in srgb, var(--olive) 8%, #fff); font-weight: 600; }
+  .yes :global(svg) { color: var(--olive-deep); }
+  .quotes { display: grid; gap: 0.4rem; padding: 1.25rem; font-size: 0.85rem; color: var(--ink-soft); background: var(--cream); }
+</style>

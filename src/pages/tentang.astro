@@ -1,0 +1,134 @@
+---
+import Base from "../layouts/Base.astro";
+import { Image } from "astro:assets";
+import PageHero from "../components/PageHero.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { stats } from "../data/site";
+import lensReflection from "../assets/photos/lens-reflection.png";
+import lensIdeaRed from "../assets/photos/lens-idea-red.png";
+import logo from "../assets/brand/mybrain-logo.png";
+
+const timeline = [
+  { year: "2011", title: "HADE berdiri", text: "Perusahaan coaching & training yang menjadi rumah awal MyBrain di Indonesia." },
+  { year: "2015", title: "Lisensi MyBrain", text: "Memperoleh hak resmi menghadirkan instrumen MyBrain UK di Indonesia." },
+  { year: "2018", title: "Ekosistem coaching", text: "Jaringan berkembang melalui Hijrah Coach Group dan Agile Hijrah Coaching." },
+  { year: "2022", title: "Center of Agility", text: "Gerakan pengembangan mahasiswa dengan MoU bersama 12 kampus." },
+  { year: "2026", title: "MyBrain Indonesia", text: "Berdiri sebagai entitas tersendiri yang fokus pada applied-neuroscience profiling." },
+];
+
+const values = [
+  { icon: "eye", title: "Utuh", text: "Menggabungkan physiology dan psychology agar gambaran diri tidak sepotong-sepotong." },
+  { icon: "compass", title: "Ilmiah", text: "Berbasis applied-neuroscience, dijelaskan dengan bahasa sains — bukan ramalan." },
+  { icon: "mirror", title: "Netral", text: "Tidak menghakimi. Setiap kuadran bernilai; yang penting adalah kesadaran dan pilihan." },
+];
+---
+<Base title="Tentang Kami" description="MyBrain Indonesia adalah perusahaan yang fokus pada riset dan pengembangan di area applied-neuroscience, pemegang lisensi resmi MyBrain (UK) di Indonesia.">
+  <PageHero num="01" line1="About" line2="Us" accent="navy" image={lensReflection} imageAlt="Seseorang memegang cermin berbentuk lengkung di depan dinding merah — reflection">
+    Kami adalah perusahaan yang fokus pada riset dan pengembangan di area <strong>applied-neuroscience</strong> yang berpusat di United Kingdom (UK). MyBrain adalah profiling tools berbasis applied-neuroscience yang mengkombinasikan antara <em>physiology</em> dan <em>psychology</em>.
+  </PageHero>
+
+  <section class="section">
+    <div class="wrap story">
+      <div class="logo-card" data-reveal>
+        <Image src={logo} alt="Logo MyBrain" width={220} />
+        <p>MyBrain® dikembangkan oleh <strong>MyBrain Limited, United Kingdom</strong>. MyBrain Indonesia adalah pemegang lisensi resminya di Indonesia.</p>
+      </div>
+      <div class="story-copy" data-reveal>
+        <p class="eyebrow t-olive">Misi kami</p>
+        <h2 class="h2">Membantu setiap orang <span class="t-orange">memahami cara otaknya bekerja</span> — lalu memakainya untuk bertumbuh.</h2>
+        <p class="lead">Kami percaya pengembangan diri, tim, dan kepemimpinan dimulai dari kesadaran yang jernih. MyBrain menghadirkan bahasa yang ilmiah, netral, dan mudah dipahami untuk menjelaskan bagaimana kita berpikir, merasa, dan bertindak.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cream">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h2 class="h2">Nilai yang kami pegang</h2>
+      </div>
+      <div class="values">
+        {values.map((v) => (
+          <article data-reveal>
+            <span class="ic"><Icon name={v.icon} size={26} /></span>
+            <h3 class="h3">{v.title}</h3>
+            <p>{v.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section journey">
+    <div class="wrap journey-grid">
+      <div class="journey-copy" data-reveal>
+        <p class="eyebrow t-olive">Perjalanan</p>
+        <h2 class="h2">Bukan pendatang baru.</h2>
+        <p class="lead">MyBrain Indonesia tumbuh dari lebih dari satu dekade pengalaman di dunia coaching, training, dan pengembangan kepemimpinan.</p>
+        <Image src={lensIdeaRed} alt="Ranting bunga putih di latar merah — idea, detail, logic, harmony" widths={[300, 399]} sizes="(min-width: 960px) 260px, 60vw" class="red" />
+      </div>
+      <ol role="list" class="timeline">
+        {timeline.map((t) => (
+          <li data-reveal>
+            <span class="year">{t.year}</span>
+            <div><h3>{t.title}</h3><p>{t.text}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="stats navy">
+    <div class="wrap stat-grid">
+      {stats.map((s) => (
+        <div class="stat" data-reveal><strong>{s.value}</strong><span>{s.label}</span></div>
+      ))}
+    </div>
+  </section>
+
+  <CtaBand from="var(--navy)" />
+</Base>
+
+<style>
+  .story { display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 900px) { .story { grid-template-columns: 0.8fr 1.2fr; gap: 5rem; } }
+  .logo-card {
+    display: grid; justify-items: center; gap: 1.5rem; text-align: center;
+    padding: 2.5rem 2rem; border-radius: var(--radius-lg); background: var(--sand);
+  }
+  .logo-card :global(img) { width: 180px; height: auto; filter: drop-shadow(0 18px 24px rgba(15, 19, 51, 0.3)); }
+  .logo-card p { font-size: 0.9rem; color: var(--ink-soft); max-width: 32ch; }
+  .story-copy { display: grid; gap: 1.25rem; }
+
+  .head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+  .values { display: grid; gap: 1.25rem; }
+  @media (min-width: 820px) { .values { grid-template-columns: repeat(3, 1fr); } }
+  .values article { display: grid; gap: 0.75rem; align-content: start; padding: 2rem; border-radius: var(--radius-lg); background: #fff; }
+  .ic { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--olive); color: #fff; }
+  .values article:nth-child(2) .ic { background: var(--navy); }
+  .values article:nth-child(3) .ic { background: var(--orange); }
+  .values p { color: var(--ink-soft); }
+
+  .journey-grid { display: grid; gap: 3rem; }
+  @media (min-width: 960px) { .journey-grid { grid-template-columns: 1fr 1.3fr; gap: 5rem; } }
+  .journey-copy { display: grid; gap: 1.2rem; align-content: start; }
+  :global(.red) { width: min(100%, 260px); height: auto; border-radius: var(--radius-lg); margin-top: 1rem; transform: rotate(-3deg); box-shadow: var(--shadow); }
+  .timeline { display: grid; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 2.6rem; top: 0.5rem; bottom: 0.5rem; width: 2px; background: var(--line-strong); }
+  .timeline li { position: relative; display: grid; grid-template-columns: 5.2rem 1fr; gap: 1.25rem; padding-block: 1.1rem; }
+  .year {
+    position: relative; z-index: 1; justify-self: center; align-self: start;
+    padding: 0.3rem 0.7rem; border-radius: 999px; background: var(--navy); color: #fff; font-weight: 800; font-size: 0.85rem;
+  }
+  .timeline li:last-child .year { background: var(--orange); }
+  .timeline h3 { font-size: 1.2rem; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+  .timeline p { color: var(--ink-soft); font-size: 0.93rem; }
+
+  .stats { padding-block: clamp(3rem, 6vw, 4.5rem) clamp(1rem, 3vw, 2rem); }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+  @media (min-width: 860px) { .stat-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat { display: grid; gap: 0.35rem; border-left: 3px solid var(--sun); padding-left: 1rem; }
+  .stat strong { font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+  .stat span { font-size: 0.85rem; color: rgba(255, 255, 255, 0.72); }
+</style>

@@ -1,0 +1,57 @@
+---
+// Closing call-to-action, after the compro's "Let's Connect" slide: cream copy panel + the birds-on-a-wire photo.
+import { Image } from "astro:assets";
+import birds from "../assets/photos/birds-plain.png";
+import Icon from "./Icon.astro";
+import { u } from "../lib/url";
+import { wa, type WaTopic } from "../data/site";
+
+interface Props { title?: string; text?: string; topic?: WaTopic; from?: string }
+const {
+  title = "Siap mengenal cara otak Anda bekerja?",
+  text = "Ceritakan kebutuhan Anda — untuk diri sendiri, tim, atau organisasi. Tim kami akan membantu memilih program yang paling tepat.",
+  topic = "general",
+  from = "var(--paper)",
+} = Astro.props;
+---
+<section class="cta" style={`--from:${from}`}>
+  <svg class="wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 0h1440v30c-180 45-420 70-720 35S180 25 0 60z" fill="var(--from)" />
+  </svg>
+  <div class="split">
+    <div class="copy" data-reveal>
+      <h2 class="title">Let’s<br />Connect</h2>
+      <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <p class="h3">{title}</p>
+      <p class="lead">{text}</p>
+      <div class="actions">
+        <a class="btn btn-orange" href={wa(topic)} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> Chat via WhatsApp</a>
+        <a class="btn btn-ghost" href={u("/layanan")}>Lihat Layanan <Icon name="arrow-right" size={18} /></a>
+      </div>
+    </div>
+    <div class="art" aria-hidden="true">
+      <Image src={birds} alt="" widths={[400, 578]} sizes="(min-width: 900px) 45vw, 100vw" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta { position: relative; background: var(--cream); }
+  .wave { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: clamp(36px, 5vw, 80px); }
+  .split { display: grid; }
+  .copy {
+    display: grid; gap: 1.1rem; justify-items: start; align-content: center;
+    padding: clamp(4.5rem, 9vw, 7.5rem) var(--gutter) clamp(3rem, 6vw, 5rem);
+  }
+  .title { font-size: clamp(3rem, 2rem + 4.5vw, 5.6rem); font-weight: 900; letter-spacing: -0.045em; line-height: 0.95; }
+  .h3 { margin-top: 0.5rem; max-width: 22ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+  .art { position: relative; min-height: 280px; background: var(--sun); overflow: hidden; }
+  .art :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%; }
+  @media (min-width: 900px) {
+    .split { grid-template-columns: 1.15fr 1fr; min-height: 560px; }
+    .copy { padding-left: max(var(--gutter), calc((100vw - var(--wrap)) / 2)); padding-right: 3rem; }
+    .art { border-left: 2px solid rgba(17, 17, 17, 0.25); }
+    .art :global(img) { object-position: 60% 50%; }
+  }
+</style>

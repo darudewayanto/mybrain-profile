@@ -1,0 +1,77 @@
+---
+import { u } from "../lib/url";
+import { Image } from "astro:assets";
+import logo from "../assets/brand/mybrain-logo.png";
+import Icon from "./Icon.astro";
+import { nav, services, site, wa } from "../data/site";
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="quad-bar" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="wrap grid">
+    <div class="about">
+      <a href={u("/")} class="brand" aria-label="MyBrain Indonesia">
+        <Image src={logo} alt="" width={128} />
+      </a>
+      <p>Profiling berbasis applied-neuroscience yang menggabungkan <em>physiology</em> dan <em>psychology</em>. Pemegang lisensi resmi MyBrain (UK) di Indonesia.</p>
+      <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+
+    <div>
+      <h2>Jelajahi</h2>
+      <ul role="list">{nav.map((n) => <li><a href={u(n.href)}>{n.label}</a></li>)}</ul>
+    </div>
+
+    <div>
+      <h2>Layanan</h2>
+      <ul role="list">{services.map((s) => <li><a href={u(`/layanan#${s.key}`)}>{s.title}</a></li>)}</ul>
+    </div>
+
+    <div>
+      <h2>Hubungi</h2>
+      <ul role="list" class="contact">
+        <li><a href={wa("general")} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> {site.phoneDisplay}</a></li>
+        <li><a href={`mailto:${site.email}`}><Icon name="mail" size={18} /> {site.email}</a></li>
+        <li><span><Icon name="globe" size={18} /> mybrain.id</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap legal">
+    <span>© {year} MyBrain Indonesia. Hak cipta dilindungi.</span>
+    <span>MyBrain® dikembangkan oleh MyBrain Limited, United Kingdom.</span>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--navy-ink); color: rgba(255, 255, 255, 0.72); font-size: 0.9rem; }
+  .quad-bar { display: grid; grid-template-columns: repeat(4, 1fr); height: 6px; }
+  .quad-bar i:nth-child(1) { background: var(--q-reasoning); }
+  .quad-bar i:nth-child(2) { background: var(--q-spontaneous); }
+  .quad-bar i:nth-child(3) { background: var(--q-specific); }
+  .quad-bar i:nth-child(4) { background: var(--q-feeling); }
+  .grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: clamp(3.5rem, 6vw, 5rem) 2.5rem;
+  }
+  @media (min-width: 760px) { .grid { grid-template-columns: 1.6fr 1fr 1.2fr 1.4fr; } }
+  .about { display: grid; gap: 1.1rem; align-content: start; max-width: 34ch; }
+  .brand :global(img) { width: 76px; height: 76px; }
+  .about .dots i:first-child { background: #fff; }
+  h2 { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; margin-bottom: 1rem; font-weight: 700; }
+  ul { display: grid; gap: 0.55rem; }
+  a { transition: color 0.2s; }
+  a:hover { color: var(--sun); }
+  .contact a, .contact span { display: inline-flex; align-items: center; gap: 0.55rem; }
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-block: 1.4rem 5.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  @media (min-width: 720px) { .legal { padding-bottom: 1.6rem; } }
+</style>

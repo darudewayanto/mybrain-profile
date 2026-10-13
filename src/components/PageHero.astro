@@ -1,0 +1,42 @@
+---
+// Inner-page hero in the company-profile style: two-tone headline, dot motif, campaign photo on the right.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props { num: string; line1: string; line2: string; accent?: "olive" | "orange" | "navy"; image?: ImageMetadata; imageAlt?: string }
+const { num, line1, line2, accent = "olive", image, imageAlt = "" } = Astro.props;
+---
+<section class="hero sand">
+  <div class="wrap grid">
+    <div class="copy">
+      <span class="num">{num}</span>
+      <h1 class="h1">{line1}<br /><span class={`t-${accent}`}>{line2}</span></h1>
+      <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <div class="lead"><slot /></div>
+    </div>
+    {image && (
+      <div class="photo">
+        <Image src={image} alt={imageAlt} widths={[400, 800]} sizes="(min-width: 900px) 34vw, 80vw" loading="eager" />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: clamp(2rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem); }
+  .grid { display: grid; gap: 2.5rem; align-items: center; }
+  .copy { display: grid; gap: 1.4rem; justify-items: start; }
+  .num { font-weight: 800; font-size: 1rem; }
+  .h1 { font-size: clamp(2.8rem, 1.4rem + 5.6vw, 6rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.98; }
+  .photo { justify-self: center; width: min(68%, 280px); }
+  .photo :global(img) {
+    width: 100%; height: auto; aspect-ratio: 5 / 9; object-fit: cover;
+    border-radius: var(--radius-lg); box-shadow: var(--shadow);
+    transform: rotate(2deg);
+  }
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: 1.5fr 1fr; }
+    .photo { width: min(100%, 360px); }
+    .photo :global(img) { aspect-ratio: 4 / 6; }
+  }
+</style>

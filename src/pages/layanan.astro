@@ -1,0 +1,126 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import Badge from "../components/Badge.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { services, wa } from "../data/site";
+import lensOptimizing from "../assets/photos/lens-optimizing.png";
+
+const audiences = [
+  { icon: "user", title: "Individu", text: "Profesional, mahasiswa, dan pelajar yang ingin mengenal potensinya." },
+  { icon: "building", title: "Korporat", text: "Perusahaan & instansi untuk leadership, team alignment, dan talent development." },
+  { icon: "award", title: "Pendidikan", text: "Kampus, sekolah, dan pesantren — untuk guru, dosen, pengurus, dan siswa." },
+  { icon: "coach", title: "Practitioner", text: "Coach, trainer, HR, dan konselor yang ingin menguasai metode MyBrain." },
+];
+---
+<Base title="Layanan" description="Layanan MyBrain Indonesia: Individual Profile, Team Profile, In-house Workshop, dan Practitioner Certification berbasis applied-neuroscience.">
+  <PageHero num="05" line1="Product" line2="Brief" accent="olive" image={lensOptimizing} imageAlt="Kaki bersepatu warna-warni terangkat ke langit biru — optimizing potential">
+    Layanan utama MyBrain untuk individu & korporat — dari mengenal diri sendiri, menyelaraskan tim, hingga menjadi practitioner bersertifikat.
+  </PageHero>
+
+  <nav class="jump" aria-label="Pilih layanan">
+    <div class="wrap jump-row">
+      {services.map((s) => <a href={`#${s.key}`} style={`--c:${s.color}`}><Icon name={s.icon} size={18} /> {s.title}</a>)}
+    </div>
+  </nav>
+
+  <section class="section list">
+    <div class="wrap">
+      {services.map((s, i) => (
+        <article class:list={["svc", { flip: i % 2 === 1 }]} id={s.key} style={`--c:${s.color}`} data-reveal>
+          <div class="visual">
+            <span class="num">0{i + 1}</span>
+            <Badge text={s.badge} icon={s.icon} color={s.color} size={200} />
+          </div>
+          <div class="body">
+            <p class="kicker">{s.kicker}</p>
+            <h2 class="h2">{s.title}</h2>
+            <p class="lead">{s.summary}</p>
+            <div class="cols">
+              <div>
+                <h3>Yang Anda dapatkan</h3>
+                <ul role="list" class="checks">{s.includes.map((x) => <li><Icon name="check" size={16} />{x}</li>)}</ul>
+              </div>
+              <div>
+                <h3>Cocok untuk</h3>
+                <p>{s.for}</p>
+                <h3 class="price-h">Investasi</h3>
+                <p class="price">Hubungi kami untuk penawaran terbaru.</p>
+              </div>
+            </div>
+            <a class="btn btn-orange" href={wa(s.wa)} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> Daftar {s.title}</a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section cream">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h2 class="h2">Untuk siapa MyBrain?</h2>
+      </div>
+      <div class="aud">
+        {audiences.map((a) => (
+          <article data-reveal>
+            <Icon name={a.icon} size={28} />
+            <h3>{a.title}</h3>
+            <p>{a.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand from="var(--cream)" title="Belum yakin program mana yang tepat?" text="Konsultasikan kebutuhan Anda secara gratis. Kami bantu merekomendasikan layanan yang paling sesuai — untuk diri sendiri, tim, atau organisasi." />
+</Base>
+
+<style>
+  .jump { position: sticky; top: 76px; z-index: 20; background: var(--sun); }
+  .jump-row { display: flex; gap: 0.5rem; overflow-x: auto; padding-block: 0.75rem; scrollbar-width: none; }
+  .jump-row::-webkit-scrollbar { display: none; }
+  .jump a {
+    flex: none; display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.5rem 1rem; border-radius: 999px; background: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem; font-weight: 700; color: var(--navy-deep); transition: background 0.2s, color 0.2s;
+  }
+  .jump a:hover { background: var(--c); color: #fff; }
+  @media (min-width: 900px) { .jump-row { justify-content: center; } }
+
+  .list .wrap { display: grid; gap: clamp(4rem, 8vw, 7rem); }
+  .svc { display: grid; gap: 2.5rem; align-items: center; scroll-margin-top: 150px; }
+  @media (min-width: 900px) {
+    .svc { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; }
+    .svc.flip .visual { order: 2; }
+    .visual { aspect-ratio: 1; }
+  }
+  .visual {
+    position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10;
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--c) 10%, var(--cream));
+    max-width: 440px; width: 100%; justify-self: center;
+  }
+  .num { position: absolute; top: 1.25rem; left: 1.5rem; font-family: var(--font-word); font-size: 3rem; line-height: 1; color: var(--c); }
+  .body { display: grid; gap: 1.1rem; justify-items: start; }
+  .kicker { font-weight: 700; color: var(--c); letter-spacing: 0.02em; }
+  .cols { display: grid; gap: 1.5rem; width: 100%; padding-block: 0.5rem; }
+  @media (min-width: 640px) { .cols { grid-template-columns: 1.2fr 1fr; } }
+  .cols h3 { font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; font-weight: 700; }
+  .cols p { font-size: 0.92rem; color: var(--ink-soft); }
+  .price-h { margin-top: 1.1rem; }
+  .price { font-weight: 600; color: var(--ink) !important; }
+  .checks { display: grid; gap: 0.55rem; }
+  .checks li { display: flex; gap: 0.55rem; font-size: 0.92rem; }
+  .checks :global(svg) { flex: none; margin-top: 0.2rem; color: var(--c); }
+
+  .head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+  .aud { display: grid; gap: 1.25rem; }
+  @media (min-width: 640px) { .aud { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) { .aud { grid-template-columns: repeat(4, 1fr); } }
+  .aud article { display: grid; gap: 0.6rem; align-content: start; padding: 1.75rem; border-radius: var(--radius); background: #fff; }
+  .aud :global(svg) { color: var(--orange); }
+  .aud h3 { font-size: 1.15rem; }
+  .aud p { font-size: 0.9rem; color: var(--ink-soft); }
+</style>
