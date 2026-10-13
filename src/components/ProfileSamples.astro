@@ -1,25 +1,13 @@
 ---
 // Illustrative Individual & Team profile charts, redrawn from the sample report in the company profile.
 // Values are illustrative only — not a real person's or team's results.
+import { petal, polar as labelPos } from "../lib/petal";
 const individual = [
   { name: "Reasoning", v: 32, c: "var(--q-reasoning)", a: -135 },
   { name: "Spontaneous", v: 35, c: "var(--q-spontaneous)", a: -45 },
   { name: "Feeling", v: 18, c: "var(--q-feeling)", a: 45 },
   { name: "Specific", v: 15, c: "var(--q-specific)", a: 135 },
 ];
-// Petal = wedge from centre whose length scales with the score.
-const petal = (angle: number, len: number) => {
-  const r = (d: number) => (d * Math.PI) / 180;
-  const half = 30;
-  const p1 = [Math.cos(r(angle - half)) * len, Math.sin(r(angle - half)) * len];
-  const p2 = [Math.cos(r(angle + half)) * len, Math.sin(r(angle + half)) * len];
-  return `M0 0 L${p1[0].toFixed(1)} ${p1[1].toFixed(1)} A${len} ${len} 0 0 1 ${p2[0].toFixed(1)} ${p2[1].toFixed(1)} Z`;
-};
-const labelPos = (angle: number, d: number) => {
-  const r = (angle * Math.PI) / 180;
-  return [Math.cos(r) * d, Math.sin(r) * d];
-};
-
 // Deterministic, descending bar series for the team chart.
 const series = (start: number, end: number, n = 24) => Array.from({ length: n }, (_, i) => start - ((start - end) * i) / (n - 1) + (i % 3) * 1.5);
 const team = [

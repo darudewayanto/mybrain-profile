@@ -31,6 +31,7 @@ export const nav = [
   { href: "/metode", label: "Metode" },
   { href: "/layanan", label: "Layanan" },
   { href: "/tentang", label: "Tentang" },
+  { href: "/faq", label: "FAQ" },
   { href: "/kontak", label: "Kontak" },
 ];
 

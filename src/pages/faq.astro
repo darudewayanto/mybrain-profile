@@ -1,0 +1,124 @@
+---
+import Base from "../layouts/Base.astro";
+import PageHero from "../components/PageHero.astro";
+import DualProfile from "../components/DualProfile.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Icon from "../components/Icon.astro";
+import { faqGroups, dailyBenefits } from "../data/faq";
+import { wa } from "../data/site";
+import lensIdeaYellow from "../assets/photos/lens-idea-yellow.png";
+
+// Structured data so search engines can show the questions as rich results.
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqGroups.flatMap((g) => g.items).map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: [...f.a, ...(f.list ?? []), ...(f.after ?? [])].join(" ") },
+  })),
+};
+---
+<Base title="FAQ" description="Pertanyaan yang sering diajukan seputar MyBrain: apa itu MyBrain Profile, potensi diri dan blind-spot, proses profiling, investasi, dan manfaatnya untuk pelajar dan orang tua.">
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} slot="head" />
+  <PageHero num="FAQ" line1="Tanya" line2="Jawab" accent="orange" image={lensIdeaYellow} imageAlt="Dua burung di atas kabel dengan latar kuning — idea, detail, logic, harmony">
+    Pertanyaan yang paling sering diajukan seputar MyBrain — dari cara kerja profiling, potensi diri dan blind-spot, hingga proses dan investasinya.
+  </PageHero>
+
+  <nav class="jump" aria-label="Kategori FAQ">
+    <div class="wrap jump-row">
+      {faqGroups.map((g) => <a href={`#${g.key}`}>{g.title}</a>)}
+      <a href="#sehari-hari">Dalam Kehidupan Sehari-hari</a>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="wrap faq-wrap">
+      {faqGroups.map((g) => (
+        <div class="group" id={g.key}>
+          <h2 class="h3">{g.title}</h2>
+          {g.items.map((f) => (
+            <details class="item">
+              <summary><span>{f.q}</span><Icon name="plus" size={20} /></summary>
+              <div class="answer">
+                {f.a.map((p) => <p>{p}</p>)}
+                {f.list && <ul>{f.list.map((li) => <li>{li}</li>)}</ul>}
+                {f.after?.map((p) => <p>{p}</p>)}
+                {f.example && <DualProfile />}
+              </div>
+            </details>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section cream" id="sehari-hari">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h2 class="h2">MyBrain dalam <span class="t-olive">kehidupan sehari-hari</span></h2>
+      </div>
+      <div class="benefits">
+        {dailyBenefits.map((b) => (
+          <article data-reveal>
+            <span class="ic"><Icon name={b.icon} size={24} /></span>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="ask" data-reveal>Pertanyaan Anda belum terjawab? <a href={wa("general")} target="_blank" rel="noopener">Tanyakan langsung via WhatsApp <Icon name="arrow-right" size={16} /></a></p>
+    </div>
+  </section>
+
+  <CtaBand from="var(--cream)" topic="individual" title="Siap mengenal energi & motivasi Anda?" />
+</Base>
+
+<style>
+  .jump { position: sticky; top: 76px; z-index: 20; background: var(--sun); }
+  .jump-row { display: flex; gap: 0.5rem; overflow-x: auto; padding-block: 0.75rem; scrollbar-width: none; }
+  .jump-row::-webkit-scrollbar { display: none; }
+  .jump a {
+    flex: none; padding: 0.5rem 1rem; border-radius: 999px; background: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem; font-weight: 700; color: var(--navy-deep); transition: background 0.2s, color 0.2s;
+  }
+  .jump a:hover { background: var(--navy); color: #fff; }
+  @media (min-width: 900px) { .jump-row { justify-content: center; } }
+
+  .faq-wrap { display: grid; gap: clamp(3rem, 6vw, 4.5rem); max-width: 860px; }
+  .group { display: grid; gap: 0.75rem; scroll-margin-top: 150px; }
+  .group .h3 { margin-bottom: 0.5rem; padding-left: 0.9rem; border-left: 5px solid var(--orange); }
+  .group:nth-child(2) .h3 { border-color: var(--olive); }
+  .group:nth-child(3) .h3 { border-color: var(--navy); }
+
+  .item { border-radius: var(--radius); background: var(--cream); transition: background 0.25s, box-shadow 0.25s; }
+  .item[open] { background: #fff; box-shadow: var(--shadow); }
+  summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1.15rem 1.35rem; cursor: pointer; list-style: none;
+    font-weight: 700; font-size: 1.02rem; line-height: 1.35;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary :global(svg) { flex: none; color: var(--orange); transition: transform 0.3s var(--ease); }
+  .item[open] summary :global(svg) { transform: rotate(45deg); }
+  summary:hover span { color: var(--navy); }
+  .answer { display: grid; gap: 0.8rem; padding: 0 1.35rem 1.4rem; color: var(--ink-soft); font-size: 0.95rem; }
+  .answer ul { display: grid; gap: 0.5rem; margin: 0; padding-left: 1.2rem; }
+  .answer li::marker { color: var(--olive); }
+
+  .head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+  .benefits { display: grid; gap: 1.25rem; }
+  @media (min-width: 720px) { .benefits { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1080px) { .benefits { grid-template-columns: repeat(3, 1fr); } }
+  .benefits article { display: grid; gap: 0.7rem; align-content: start; padding: 1.75rem; border-radius: var(--radius-lg); background: #fff; }
+  .ic { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: var(--navy); color: #fff; }
+  .benefits article:nth-child(4n + 2) .ic { background: var(--olive); }
+  .benefits article:nth-child(4n + 3) .ic { background: var(--orange); }
+  .benefits article:nth-child(4n + 4) .ic { background: var(--q-reasoning); }
+  .benefits h3 { font-size: 1.2rem; }
+  .benefits p { font-size: 0.92rem; color: var(--ink-soft); }
+  .ask { margin-top: 2.5rem; text-align: center; font-weight: 600; }
+  .ask a { display: inline-flex; align-items: center; gap: 0.35rem; color: var(--orange); }
+  .ask a:hover { text-decoration: underline; }
+</style>
