@@ -85,7 +85,7 @@ export const services = [
     badge: "INDIVIDUAL • PROFILE •",
     title: "Individual Profile",
     kicker: "Profiling + 1on1 Interpretation",
-    price: ["Profiling saja — Rp 500.000", "Profiling + sesi 1on1 — Rp 1.500.000"],
+    price: [] as string[],
     summary: "Kenali dominansi otak Anda sendiri, lalu bedah hasilnya bersama practitioner tersertifikasi dalam sesi 1on1.",
     for: "Profesional, mahasiswa, pelajar, dan siapa pun yang ingin memahami dirinya lebih utuh.",
     includes: [

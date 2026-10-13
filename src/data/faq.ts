@@ -114,10 +114,8 @@ export const faqGroups: { key: string; title: string; items: Faq[] }[] = [
       },
       {
         q: "Berapa investasi untuk MyBrain profiling?",
-        a: ["Harga normal:"],
-        list: ["Profiling saja — Rp 500.000", "Bundling profiling + sesi 1on1 interpretation — Rp 1.500.000"],
-        after: [
-          "Untuk harga promo, hubungi practitioner atau account manager MyBrain Indonesia.",
+        a: [
+          "Investasi menyesuaikan jenis layanan — profiling saja, atau bundling profiling dengan sesi 1on1 interpretation. Hubungi kami via WhatsApp di 0811-1881-877 untuk penawaran dan promo terbaru.",
           "Penting: seluruh pembayaran hanya dilakukan ke rekening resmi atas nama HADE.",
         ],
       },
