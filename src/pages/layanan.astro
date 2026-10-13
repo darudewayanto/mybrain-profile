@@ -46,7 +46,9 @@ const audiences = [
                 <h3>Cocok untuk</h3>
                 <p>{s.for}</p>
                 <h3 class="price-h">Investasi</h3>
-                <p class="price">Hubungi kami untuk penawaran terbaru.</p>
+                {s.price.length > 0
+                  ? <ul role="list" class="prices">{s.price.map((x) => <li>{x}</li>)}<li class="note">Harga normal · tanyakan promo terbaru</li></ul>
+                  : <p class="price">Hubungi kami untuk penawaran terbaru.</p>}
               </div>
             </div>
             <a class="btn btn-orange" href={wa(s.wa)} target="_blank" rel="noopener"><Icon name="whatsapp" size={20} /> Daftar {s.title}</a>
@@ -111,6 +113,8 @@ const audiences = [
   .cols p { font-size: 0.92rem; color: var(--ink-soft); }
   .price-h { margin-top: 1.1rem; }
   .price { font-weight: 600; color: var(--ink) !important; }
+  .prices { display: grid; gap: 0.3rem; font-weight: 700; font-size: 0.95rem; }
+  .prices .note { font-weight: 400; font-size: 0.8rem; color: var(--muted); }
   .checks { display: grid; gap: 0.55rem; }
   .checks li { display: flex; gap: 0.55rem; font-size: 0.92rem; }
   .checks :global(svg) { flex: none; margin-top: 0.2rem; color: var(--c); }

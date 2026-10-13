@@ -85,6 +85,7 @@ export const services = [
     badge: "INDIVIDUAL • PROFILE •",
     title: "Individual Profile",
     kicker: "Profiling + 1on1 Interpretation",
+    price: ["Profiling saja — Rp 500.000", "Profiling + sesi 1on1 — Rp 1.500.000"],
     summary: "Kenali dominansi otak Anda sendiri, lalu bedah hasilnya bersama practitioner tersertifikasi dalam sesi 1on1.",
     for: "Profesional, mahasiswa, pelajar, dan siapa pun yang ingin memahami dirinya lebih utuh.",
     includes: [
@@ -102,6 +103,7 @@ export const services = [
     badge: "TEAM • PROFILE •",
     title: "Team Profile",
     kicker: "Team Interpretation",
+    price: [] as string[],
     summary: "Petakan komposisi kuadran seluruh anggota tim untuk melihat kekuatan kolektif, celah, dan pola komunikasinya.",
     for: "Tim kerja, divisi, manajemen, pengurus organisasi, sekolah, dan kampus.",
     includes: [
@@ -119,6 +121,7 @@ export const services = [
     badge: "IN-HOUSE • WORKSHOP •",
     title: "In-house Workshop",
     kicker: "Leadership Workshop",
+    price: [] as string[],
     summary: "Workshop leadership, team alignment, dan komunikasi berbasis applied-neuroscience — dirancang khusus untuk organisasi Anda.",
     for: "Perusahaan, instansi, kampus, sekolah, dan pesantren.",
     includes: [
@@ -136,6 +139,7 @@ export const services = [
     badge: "PRACTITIONER • CERTIFIED •",
     title: "Practitioner Certification",
     kicker: "Sertifikasi Practitioner",
+    price: [] as string[],
     summary: "Jadilah practitioner MyBrain bersertifikat yang mampu melakukan interpretasi profil individu maupun tim.",
     for: "Coach, trainer, HR, psikolog, konselor, dosen, dan guru BK.",
     includes: [
