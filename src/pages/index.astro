@@ -135,7 +135,7 @@ const steps = [
     <div class="wrap">
       <div class="head center" data-reveal>
         <p class="eyebrow">Profiling Concept</p>
-        <h2 class="h2">Empat kuadran <span class="t-orange">Neurological-Dominance</span></h2>
+        <h2 class="h2">Empat Kuadran <span class="t-orange">Neurological-<wbr />Dominance</span></h2>
         <p class="lead">Pilih satu kuadran untuk melihat bagaimana ia memengaruhi cara Anda berpikir dan bekerja.</p>
       </div>
       <div data-reveal><QuadrantExplorer /></div>
@@ -303,7 +303,7 @@ const steps = [
   .lens-row {
     display: grid; grid-auto-flow: column; grid-auto-columns: min(72vw, 300px);
     gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory;
-    padding: 0 var(--gutter) 1rem; scrollbar-width: none;
+    padding: 0 var(--gutter) 1rem; scroll-padding-inline: var(--gutter); scrollbar-width: none;
   }
   .lens-row::-webkit-scrollbar { display: none; }
   @media (min-width: 900px) {
