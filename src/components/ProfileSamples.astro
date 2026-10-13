@@ -1,79 +1,39 @@
 ---
-// Illustrative Individual & Team profile charts, redrawn from the sample report in the company profile.
-// Values are illustrative only — not a real person's or team's results.
-import { petal, polar as labelPos } from "../lib/petal";
-const individual = [
-  { name: "Reasoning", v: 32, c: "var(--q-reasoning)", a: -135 },
-  { name: "Spontaneous", v: 35, c: "var(--q-spontaneous)", a: -45 },
-  { name: "Feeling", v: 18, c: "var(--q-feeling)", a: 45 },
-  { name: "Specific", v: 15, c: "var(--q-specific)", a: 135 },
-];
-// Deterministic, descending bar series for the team chart.
-const series = (start: number, end: number, n = 24) => Array.from({ length: n }, (_, i) => start - ((start - end) * i) / (n - 1) + (i % 3) * 1.5);
-const team = [
-  { name: "Reasoning", c: "var(--q-reasoning)", bars: series(88, 40) },
-  { name: "Spontaneous", c: "var(--q-spontaneous)", bars: series(70, 34) },
-  { name: "Specific", c: "var(--q-specific)", bars: series(82, 30) },
-  { name: "Feeling", c: "var(--q-feeling)", bars: series(64, 18) },
-];
+// Sample Individual & Team profiles, cropped as-is from the company profile slide ("Brain Instrument").
+import { Image } from "astro:assets";
+import individual from "../assets/photos/profile-individual.jpg";
+import team from "../assets/photos/profile-team.jpg";
 ---
 <div class="samples">
   <figure class="card">
-    <figcaption><strong>Individual Profile</strong><span>Komposisi dominansi satu orang</span></figcaption>
-    <svg viewBox="-150 -150 300 300" role="img" aria-label="Contoh Individual Profile: Spontaneous 35%, Reasoning 32%, Feeling 18%, Specific 15%">
-      <circle r="140" fill="var(--cream)" />
-      <circle r="100" fill="none" stroke="var(--line)" stroke-dasharray="3 5" />
-      <circle r="60" fill="none" stroke="var(--line)" stroke-dasharray="3 5" />
-      {individual.map((q) => {
-        const len = 30 + q.v * 3;
-        const [lx, ly] = labelPos(q.a, len + 16);
-        return (
-          <g>
-            <path d={petal(q.a, len)} fill={q.c} opacity="0.9" />
-            <text x={lx} y={ly + 5} text-anchor="middle" font-size="15" font-weight="800" fill={q.c}>{q.v}%</text>
-          </g>
-        );
-      })}
-      <circle r="22" fill="var(--navy)" />
-    </svg>
-    <ul role="list" class="legend">{individual.map((q) => <li style={`--c:${q.c}`}>{q.name}</li>)}</ul>
+    <Image
+      src={individual}
+      alt="Contoh Individual Profile MyBrain: Reasoning 32%, Spontaneous 35%, Specific 19%, Feeling 14%"
+      widths={[500, 900, 1400]}
+      sizes="(min-width: 900px) 34vw, 90vw"
+    />
+    <figcaption>Komposisi dominansi satu orang</figcaption>
   </figure>
 
   <figure class="card">
-    <figcaption><strong>Team Profile</strong><span>Sebaran kuadran seluruh anggota tim</span></figcaption>
-    <div class="team" role="img" aria-label="Contoh Team Profile: grafik sebaran skor tiap kuadran untuk seluruh anggota tim">
-      {team.map((t) => (
-        <div class="tchart" style={`--c:${t.c}`}>
-          <span>{t.name}</span>
-          <svg viewBox="0 0 240 100" preserveAspectRatio="none" aria-hidden="true">
-            <line x1="0" x2="240" y1="45" y2="45" stroke="#e06666" stroke-width="1" stroke-dasharray="4 3" />
-            {t.bars.map((b, i) => <rect x={i * 10 + 1} y={100 - b} width="6" height={b} rx="1.5" fill="var(--c)" />)}
-          </svg>
-        </div>
-      ))}
-    </div>
-    <p class="fine">Ilustrasi — bukan data nyata.</p>
+    <Image
+      src={team}
+      alt="Contoh Team Profile MyBrain: profil tim di atas otak dan grafik sebaran skor Reasoning, Spontaneous, Specific, dan Feeling untuk seluruh anggota tim"
+      widths={[700, 1200, 2000]}
+      sizes="(min-width: 900px) 56vw, 90vw"
+    />
+    <figcaption>Sebaran kuadran seluruh anggota tim</figcaption>
   </figure>
 </div>
 
 <style>
-  .samples { display: grid; gap: 1.25rem; }
-  @media (min-width: 900px) { .samples { grid-template-columns: 1fr 1.35fr; } }
+  .samples { display: grid; gap: 1.25rem; align-items: start; }
+  @media (min-width: 900px) { .samples { grid-template-columns: 1fr 1.65fr; } }
   .card {
-    display: grid; gap: 1.25rem; align-content: start;
-    padding: clamp(1.25rem, 3vw, 2rem); border-radius: var(--radius-lg);
+    display: grid; gap: 1rem; margin: 0;
+    padding: clamp(1rem, 2.5vw, 1.75rem); border-radius: var(--radius-lg);
     background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow);
   }
-  figcaption { display: grid; gap: 0.1rem; }
-  figcaption strong { font-size: 1.15rem; font-weight: 800; }
-  figcaption span { font-size: 0.85rem; color: var(--muted); }
-  .card > svg { width: min(100%, 300px); justify-self: center; }
-  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; justify-content: center; font-size: 0.8rem; font-weight: 600; }
-  .legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
-  .legend li::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
-  .team { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.25rem; }
-  .tchart { display: grid; gap: 0.35rem; }
-  .tchart span { font-size: 0.78rem; font-weight: 700; color: var(--c); }
-  .tchart svg { width: 100%; height: 90px; border-bottom: 1px solid var(--line-strong); }
-  .fine { font-size: 0.75rem; color: var(--muted); }
+  .card :global(img) { width: 100%; height: auto; }
+  figcaption { font-size: 0.85rem; color: var(--muted); text-align: center; }
 </style>

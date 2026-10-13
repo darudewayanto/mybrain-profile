@@ -1,43 +1,15 @@
 ---
-// Personal vs Professional profile side by side, redrawn from the sample in the sales playbook.
-// Values are illustrative only.
-import { petal, polar, quadAngles } from "../lib/petal";
-
-const colors = { reasoning: "var(--q-reasoning)", spontaneous: "var(--q-spontaneous)", feeling: "var(--q-feeling)", specific: "var(--q-specific)" } as const;
-const profiles = [
-  { title: "Personal Profile", values: { reasoning: 34, spontaneous: 22, specific: 28, feeling: 16 } },
-  { title: "Professional Profile", values: { reasoning: 32, spontaneous: 35, specific: 18, feeling: 15 } },
-];
-type Key = keyof typeof colors;
+// Personal vs Professional profile sample, as-is from the sales playbook.
+import { Image } from "astro:assets";
+import sample from "../assets/photos/profile-personal-professional.png";
 ---
-<div class="dual">
-  {profiles.map((p) => (
-    <figure>
-      <svg viewBox="-125 -125 250 250" role="img" aria-label={`${p.title}: ${Object.entries(p.values).map(([k, v]) => `${k} ${v}%`).join(", ")}`}>
-        <circle r="118" fill="var(--cream)" />
-        <circle r="80" fill="none" stroke="var(--line)" stroke-dasharray="3 5" />
-        {(Object.keys(colors) as Key[]).map((k) => {
-          const len = 22 + p.values[k] * 2.4;
-          const [lx, ly] = polar(quadAngles[k], len + 14);
-          return (
-            <g>
-              <path d={petal(quadAngles[k], len)} fill={colors[k]} opacity="0.9" />
-              <text x={lx} y={ly + 4} text-anchor="middle" font-size="12" font-weight="800" fill={colors[k]}>{p.values[k]}%</text>
-            </g>
-          );
-        })}
-        <circle r="16" fill="var(--navy)" />
-      </svg>
-      <figcaption>{p.title}</figcaption>
-    </figure>
-  ))}
-  <p class="fine">Ilustrasi — bukan data nyata. Profil yang sama bisa muncul berbeda di konteks personal dan profesional.</p>
-</div>
+<figure class="dual">
+  <Image src={sample} alt="Contoh hasil MyBrain: Personal Profile dan Professional Profile berdampingan" width={340} />
+  <figcaption>Profil yang sama bisa muncul berbeda di konteks personal dan profesional.</figcaption>
+</figure>
 
 <style>
-  .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem; max-width: 520px; }
-  figure { display: grid; gap: 0.5rem; justify-items: center; }
-  svg { width: 100%; max-width: 220px; }
-  figcaption { font-weight: 800; font-size: 0.9rem; }
-  .fine { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); }
+  .dual { display: grid; gap: 0.5rem; margin: 0.25rem 0 0; max-width: 340px; }
+  .dual :global(img) { width: 100%; height: auto; }
+  figcaption { font-size: 0.78rem; color: var(--muted); }
 </style>
