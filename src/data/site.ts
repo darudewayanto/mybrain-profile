@@ -155,8 +155,8 @@ export const services = [
 export const stats = [
   { value: "2015", label: "Pemegang lisensi resmi MyBrain UK di Indonesia" },
   { value: "12", label: "Kampus mitra (MoU Center of Agility)" },
-  { value: "250+", label: "Leader telah mengikuti program" },
-  { value: "9", label: "Kota di seluruh Indonesia" },
+  { value: "250+", label: "Perusahaan telah menggunakan MyBrain" },
+  { value: "9", label: "Komunitas partner di seluruh Indonesia" },
 ];
 
 // The three gaps MyBrain fills (from the company profile).
