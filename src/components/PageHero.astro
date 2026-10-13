@@ -2,9 +2,10 @@
 // Inner-page hero in the company-profile style: two-tone headline, dot motif, campaign photo on the right.
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import LensCard from "./LensCard.astro";
 
-interface Props { num: string; line1: string; line2: string; accent?: "olive" | "orange" | "navy"; image?: ImageMetadata; imageAlt?: string }
-const { num, line1, line2, accent = "olive", image, imageAlt = "" } = Astro.props;
+interface Props { num: string; line1: string; line2: string; accent?: "olive" | "orange" | "navy"; image?: ImageMetadata; imageAlt?: string; lens?: "idea" | "optimizing" | "anticipating" | "reflection" }
+const { num, line1, line2, accent = "olive", image, imageAlt = "", lens } = Astro.props;
 ---
 <section class="hero sand">
   <div class="wrap grid">
@@ -14,7 +15,10 @@ const { num, line1, line2, accent = "olive", image, imageAlt = "" } = Astro.prop
       <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <div class="lead"><slot /></div>
     </div>
-    {image && (
+    {lens && (
+      <div class="photo"><LensCard kind={lens} class="hero-lens" sizes="(min-width: 900px) 360px, 68vw" eager /></div>
+    )}
+    {!lens && image && (
       <div class="photo">
         <Image src={image} alt={imageAlt} widths={[400, 800]} sizes="(min-width: 900px) 34vw, 80vw" loading="eager" />
       </div>
@@ -34,9 +38,11 @@ const { num, line1, line2, accent = "olive", image, imageAlt = "" } = Astro.prop
     border-radius: var(--radius-lg); box-shadow: var(--shadow);
     transform: rotate(2deg);
   }
+  .photo :global(.hero-lens) { aspect-ratio: 5 / 9; box-shadow: var(--shadow); transform: rotate(2deg); border-radius: var(--radius-lg); }
   @media (min-width: 900px) {
     .grid { grid-template-columns: 1.5fr 1fr; }
     .photo { width: min(100%, 360px); }
     .photo :global(img) { aspect-ratio: 4 / 6; }
+    .photo :global(.hero-lens) { aspect-ratio: 4 / 6; }
   }
 </style>

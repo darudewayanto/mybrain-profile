@@ -6,7 +6,6 @@ import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
 import { faqGroups, dailyBenefits } from "../data/faq";
 import { wa } from "../data/site";
-import lensIdeaYellow from "../assets/photos/lens-idea-yellow.png";
 
 // Structured data so search engines can show the questions as rich results.
 const faqLd = {
@@ -21,7 +20,7 @@ const faqLd = {
 ---
 <Base title="FAQ" description="Pertanyaan yang sering diajukan seputar MyBrain: apa itu MyBrain Profile, potensi diri dan blind-spot, proses profiling, investasi, dan manfaatnya untuk pelajar dan orang tua.">
   <script type="application/ld+json" set:html={JSON.stringify(faqLd)} slot="head" />
-  <PageHero num="FAQ" line1="Tanya" line2="Jawab" accent="orange" image={lensIdeaYellow} imageAlt="Dua burung di atas kabel dengan latar kuning — idea, detail, logic, harmony">
+  <PageHero num="FAQ" line1="Tanya" line2="Jawab" accent="orange" lens="idea">
     Pertanyaan yang paling sering diajukan seputar MyBrain — dari cara kerja profiling, potensi diri dan blind-spot, hingga proses dan investasinya.
   </PageHero>
 

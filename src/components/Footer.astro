@@ -1,7 +1,7 @@
 ---
 import { u } from "../lib/url";
 import { Image } from "astro:assets";
-import logo from "../assets/brand/mybrain-logo.png";
+import logo from "../assets/brand/mybrain-logo-hd.png";
 import Icon from "./Icon.astro";
 import { nav, services, site, wa } from "../data/site";
 const year = new Date().getFullYear();
@@ -11,7 +11,7 @@ const year = new Date().getFullYear();
   <div class="wrap grid">
     <div class="about">
       <a href={u("/")} class="brand" aria-label="MyBrain Indonesia">
-        <Image src={logo} alt="" width={128} />
+        <Image src={logo} alt="" width={160} />
       </a>
       <p>Profiling berbasis applied-neuroscience yang menggabungkan <em>physiology</em> dan <em>psychology</em>. Pemegang lisensi resmi MyBrain (UK) di Indonesia.</p>
       <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>

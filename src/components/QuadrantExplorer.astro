@@ -1,14 +1,13 @@
 ---
 // Interactive version of the official quadrant artwork: pick a quadrant to read what it means.
-import { Image } from "astro:assets";
-import quadrant from "../assets/brand/quadrant.png";
+import QuadrantArt from "./QuadrantArt.astro";
 import { quadrants } from "../data/site";
 // Hotspot positions follow the artwork: Reasoning top-left, Spontaneous top-right, Specific bottom-left, Feeling bottom-right.
 const pos = { reasoning: "tl", spontaneous: "tr", specific: "bl", feeling: "br" } as const;
 ---
-<div class="qx" data-qx>
+<div class="qx" data-qx data-active="reasoning">
   <div class="art">
-    <Image src={quadrant} alt="Empat kuadran MyBrain: Reasoning, Spontaneous, Specific, Feeling" widths={[360, 561]} sizes="(min-width: 900px) 440px, 86vw" />
+    <QuadrantArt class="art-svg" />
     {quadrants.map((q, i) => (
       <button
         class={`hot ${pos[q.key]}`}
@@ -47,7 +46,13 @@ const pos = { reasoning: "tl", spontaneous: "tr", specific: "bl", feeling: "br" 
   @media (min-width: 900px) { .qx { grid-template-columns: minmax(0, 440px) 1fr; } }
 
   .art { position: relative; width: min(100%, 440px); justify-self: center; }
-  .art :global(img) { width: 100%; height: auto; filter: drop-shadow(0 20px 30px rgba(15, 19, 51, 0.18)); }
+  .art :global(.art-svg) { width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 20px 30px rgba(15, 19, 51, 0.18)); }
+  /* Dim the quadrants that are not selected. */
+  .art :global(.q) { transition: opacity 0.35s var(--ease); }
+  .qx[data-active="reasoning"] .art :global(.q:not([data-quad="reasoning"])),
+  .qx[data-active="spontaneous"] .art :global(.q:not([data-quad="spontaneous"])),
+  .qx[data-active="specific"] .art :global(.q:not([data-quad="specific"])),
+  .qx[data-active="feeling"] .art :global(.q:not([data-quad="feeling"])) { opacity: 0.4; }
   .hot {
     position: absolute;
     width: 40%; height: 40%;
@@ -58,7 +63,6 @@ const pos = { reasoning: "tl", spontaneous: "tr", specific: "bl", feeling: "br" 
   .hot.tl { left: 0; top: 0; } .hot.tr { right: 0; top: 0; }
   .hot.bl { left: 0; bottom: 0; } .hot.br { right: 0; bottom: 0; }
   .hot:hover { background: rgba(255, 255, 255, 0.12); }
-  .hot[aria-pressed="true"] { box-shadow: 0 0 0 4px var(--c); }
 
   .panels { display: grid; gap: 1.25rem; }
   .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -94,6 +98,7 @@ const pos = { reasoning: "tl", spontaneous: "tr", specific: "bl", feeling: "br" 
 <script>
   document.querySelectorAll<HTMLElement>("[data-qx]").forEach((root) => {
     const show = (key: string) => {
+      root.dataset.active = key;
       root.querySelectorAll<HTMLElement>(".panel").forEach((p) => (p.hidden = p.id !== `qpanel-${key}`));
       root.querySelectorAll<HTMLElement>("button[data-q]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.q === key)));
     };

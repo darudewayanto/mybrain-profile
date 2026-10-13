@@ -5,7 +5,6 @@ import Badge from "../components/Badge.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
 import { services, wa } from "../data/site";
-import lensOptimizing from "../assets/photos/lens-optimizing.png";
 
 const audiences = [
   { icon: "user", title: "Individu", text: "Profesional, mahasiswa, dan pelajar yang ingin mengenal potensinya." },
@@ -15,7 +14,7 @@ const audiences = [
 ];
 ---
 <Base title="Layanan" description="Layanan MyBrain Indonesia: Individual Profile, Team Profile, In-house Workshop, dan Practitioner Certification berbasis applied-neuroscience.">
-  <PageHero num="05" line1="Product" line2="Brief" accent="olive" image={lensOptimizing} imageAlt="Kaki bersepatu warna-warni terangkat ke langit biru — optimizing potential">
+  <PageHero num="05" line1="Product" line2="Brief" accent="olive" lens="optimizing">
     Layanan utama MyBrain untuk individu & korporat — dari mengenal diri sendiri, menyelaraskan tim, hingga menjadi practitioner bersertifikat.
   </PageHero>
 

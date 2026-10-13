@@ -8,11 +8,8 @@ import CtaBand from "../components/CtaBand.astro";
 import { u } from "../lib/url";
 import { wa, services, stats, problems } from "../data/site";
 
-import heroPhoto from "../assets/photos/optimizing-wide.png";
-import lensIdea from "../assets/photos/lens-idea-yellow.png";
-import lensOptimizing from "../assets/photos/lens-optimizing.png";
-import lensReflection from "../assets/photos/lens-reflection.png";
-import lensAnticipating from "../assets/photos/lens-anticipating.png";
+import heroPhoto from "../assets/photos/shoe-hd.jpg";
+import LensCard from "../components/LensCard.astro";
 import reflectionPhoto from "../assets/photos/lens-reflection.png";
 
 const outcomes = [
@@ -23,10 +20,10 @@ const outcomes = [
 ];
 
 const lenses = [
-  { img: lensIdea, alt: "Dua burung di atas kabel dengan latar kuning — idea, detail, logic, harmony", title: "Harmoni 4 Kuadran", text: "Ide, detail, logika, dan harmoni — melihat diri secara utuh." },
-  { img: lensOptimizing, alt: "Kaki bersepatu warna-warni terangkat ke langit biru — optimizing potential", title: "Optimizing Potential", text: "Mengoptimalkan kekuatan alami yang sudah Anda miliki." },
-  { img: lensReflection, alt: "Seseorang memegang cermin berbentuk lengkung di depan dinding merah — reflection", title: "Reflection", text: "Cermin yang jujur tentang cara Anda berpikir dan bertindak." },
-  { img: lensAnticipating, alt: "Tiga potong jeruk bertumpuk di latar biru — anticipating blind-spot", title: "Anticipating Blind-spot", text: "Mengantisipasi titik buta sebelum menjadi hambatan." },
+  { kind: "idea", alt: "Dua burung di atas kabel dengan latar kuning — idea, detail, logic, harmony", title: "Harmoni 4 Kuadran", text: "Ide, detail, logika, dan harmoni — melihat diri secara utuh." },
+  { kind: "optimizing", alt: "Kaki bersepatu warna-warni terangkat ke langit biru — optimizing potential", title: "Optimizing Potential", text: "Mengoptimalkan kekuatan alami yang sudah Anda miliki." },
+  { kind: "reflection", alt: "Seseorang memegang cermin berbentuk lengkung di depan dinding merah — reflection", title: "Reflection", text: "Cermin yang jujur tentang cara Anda berpikir dan bertindak." },
+  { kind: "anticipating", alt: "Tiga potong jeruk bertumpuk di latar biru — anticipating blind-spot", title: "Anticipating Blind-spot", text: "Mengantisipasi titik buta sebelum menjadi hambatan." },
 ];
 
 const steps = [
@@ -52,7 +49,7 @@ const steps = [
 
       <div class="hero-art">
         <div class="hero-circle">
-          <Image src={heroPhoto} alt="Kaki bersepatu warna-warni terangkat ke langit biru" widths={[420, 742]} sizes="(min-width: 900px) 460px, 80vw" loading="eager" fetchpriority="high" />
+          <Image src={heroPhoto} alt="Kaki bersepatu warna-warni terangkat ke langit biru" widths={[480, 800, 1089]} sizes="(min-width: 900px) 460px, 80vw" loading="eager" fetchpriority="high" />
         </div>
         <span class="sticker word" aria-hidden="true">optimizing<br />potential</span>
         <div class="hero-badge"><Badge text="MYBRAIN • INDONESIA •" icon="brain" color="var(--navy)" size={118} /></div>
@@ -153,7 +150,8 @@ const steps = [
     <div class="lens-row">
       {lenses.map((l, i) => (
         <figure class="lens" style={`--d:${i * 90}ms`} data-reveal>
-          <Image src={l.img} alt={l.alt} widths={[300, 415]} sizes="(min-width: 900px) 24vw, 70vw" />
+          <LensCard kind={l.kind as "idea"} />
+          <span class="sr-only">{l.alt}</span>
           <figcaption><strong>{l.title}</strong><span>{l.text}</span></figcaption>
         </figure>
       ))}
@@ -210,8 +208,7 @@ const steps = [
     box-shadow: 0 30px 60px -30px rgba(15, 19, 51, 0.6);
     border: 10px solid var(--paper);
   }
-  /* Zoom past the photo's baked-in caption; the sticker carries that line instead. */
-  .hero-circle :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; transform: scale(1.18); transform-origin: 50% 100%; }
+  .hero-circle :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
   .sticker {
     position: absolute; top: 4%; right: -2%;
     padding: 0.5rem 1.1rem 0.6rem;
@@ -310,11 +307,8 @@ const steps = [
     .lens-row { grid-auto-flow: row; grid-template-columns: repeat(4, 1fr); overflow: visible; width: min(100% - 2 * var(--gutter), var(--wrap)); margin-inline: auto; padding: 0; }
   }
   .lens { scroll-snap-align: start; display: grid; gap: 0.9rem; transition-delay: var(--d); }
-  .lens :global(img) {
-    width: 100%; height: auto; aspect-ratio: 9 / 19; object-fit: cover; border-radius: 22px;
-    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
-  }
-  .lens:hover :global(img) { transform: translateY(-8px); box-shadow: var(--shadow); }
+  .lens :global(.lens-card) { transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); }
+  .lens:hover :global(.lens-card) { transform: translateY(-8px); box-shadow: var(--shadow); }
   .lens figcaption { display: grid; gap: 0.2rem; font-size: 0.88rem; color: var(--ink-soft); }
   .lens strong { color: var(--ink); font-size: 1rem; }
 

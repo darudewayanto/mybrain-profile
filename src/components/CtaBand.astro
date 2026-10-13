@@ -1,7 +1,7 @@
 ---
 // Closing call-to-action, after the compro's "Let's Connect" slide: cream copy panel + the birds-on-a-wire photo.
 import { Image } from "astro:assets";
-import birds from "../assets/photos/birds-plain.png";
+import birds from "../assets/photos/birds-hd.jpg";
 import Icon from "./Icon.astro";
 import { u } from "../lib/url";
 import { wa, type WaTopic } from "../data/site";
@@ -30,7 +30,7 @@ const {
       </div>
     </div>
     <div class="art" aria-hidden="true">
-      <Image src={birds} alt="" widths={[400, 578]} sizes="(min-width: 900px) 45vw, 100vw" />
+      <Image src={birds} alt="" widths={[600, 1000, 1445]} sizes="(min-width: 900px) 45vw, 100vw" />
     </div>
   </div>
 </section>

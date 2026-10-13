@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import { Image } from "astro:assets";
 import Icon from "../components/Icon.astro";
 import { services, site, wa } from "../data/site";
-import birds from "../assets/photos/birds-plain.png";
+import birds from "../assets/photos/birds-hd.jpg";
 ---
 <Base title="Kontak" description="Hubungi MyBrain Indonesia via WhatsApp atau email untuk Individual Profile, Team Profile, In-house Workshop, dan Practitioner Certification." headerTone="cream">
   <section class="contact">
@@ -42,7 +42,7 @@ import birds from "../assets/photos/birds-plain.png";
     </div>
 
     <div class="art">
-      <Image src={birds} alt="" widths={[400, 578]} sizes="(min-width: 900px) 45vw, 100vw" loading="eager" />
+      <Image src={birds} alt="" widths={[600, 1000, 1445]} sizes="(min-width: 900px) 45vw, 100vw" loading="eager" />
       <div class="card">
         <a href={wa("general")} target="_blank" rel="noopener"><span class="i"><Icon name="whatsapp" size={20} /></span> {site.phoneDisplay}</a>
         <a href={`mailto:${site.email}`}><span class="i"><Icon name="mail" size={20} /></span> {site.email}</a>

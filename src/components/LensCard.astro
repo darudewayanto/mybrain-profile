@@ -1,0 +1,72 @@
+---
+// The four campaign visuals rebuilt from clean photos + live text, so the words stay sharp at any size.
+// "reflection" has no clean source yet, so it uses the flattened campaign image.
+import { Image } from "astro:assets";
+import birds from "../assets/photos/birds-hd.jpg";
+import shoe from "../assets/photos/shoe-hd.jpg";
+import oranges from "../assets/photos/oranges.png";
+import reflection from "../assets/photos/lens-reflection.png";
+
+type Kind = "idea" | "optimizing" | "anticipating" | "reflection";
+interface Props { kind: Kind; class?: string; sizes?: string; eager?: boolean }
+const { kind, class: cls, sizes = "(min-width: 900px) 25vw, 70vw", eager = false } = Astro.props;
+const loading = eager ? "eager" : "lazy";
+---
+<div class:list={["lens-card", kind, cls]} aria-hidden="true">
+  {kind === "idea" && (
+    <>
+      <Image src={birds} alt="" widths={[400, 800, 1200]} sizes={sizes} loading={loading} class="bg" />
+      <p class="word tl">idea<br />detail</p>
+      <p class="word br">logic<br />harmony</p>
+    </>
+  )}
+  {kind === "optimizing" && (
+    <>
+      <Image src={shoe} alt="" widths={[400, 800, 1089]} sizes={sizes} loading={loading} class="bg" />
+      <p class="word tl">optimizing<br />potential</p>
+    </>
+  )}
+  {kind === "anticipating" && (
+    <>
+      <p class="word tl">anticipating<br />blind-spot</p>
+      <Image src={oranges} alt="" widths={[344]} sizes="200px" loading={loading} class="fruit" />
+    </>
+  )}
+  {kind === "reflection" && <Image src={reflection} alt="" widths={[413]} sizes={sizes} loading={loading} class="bg" />}
+</div>
+
+<style>
+  .lens-card {
+    position: relative;
+    overflow: hidden;
+    container-type: inline-size;
+    aspect-ratio: 9 / 19;
+    border-radius: 22px;
+    background: var(--sky);
+  }
+  .lens-card.idea { background: var(--sun); }
+  .lens-card.reflection { background: #b5473d; }
+  /* The flattened source has a pale column on its right edge; crop it off. */
+  .lens-card.reflection :global(.bg) { transform: scale(1.04); transform-origin: 30% 50%; }
+  .lens-card :global(.bg) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .lens-card.idea :global(.bg) { object-position: 50% 52%; }
+  .lens-card.optimizing :global(.bg) { object-position: 45% 50%; }
+  .word {
+    position: absolute;
+    margin: 0;
+    color: #fff;
+    font-size: 15cqi;
+    line-height: 0.86;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  }
+  .tl { top: 9%; left: 9%; }
+  .br { bottom: 9%; right: 9%; text-align: right; }
+  .optimizing .word { top: 13%; font-size: 14.5cqi; }
+  .anticipating .word { top: 9%; font-size: 13cqi; }
+  .lens-card :global(.fruit) {
+    position: absolute; left: 50%; top: 20%; width: 62%; height: auto;
+    transform: translateX(-46%);
+    filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.25));
+  }
+</style>

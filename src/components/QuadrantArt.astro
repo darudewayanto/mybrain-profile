@@ -1,0 +1,51 @@
+---
+// Vector redraw of the official MyBrain quadrant artwork, so it stays sharp at any size.
+// Four gradient arrows point into the logo disc; labels follow an arc around the centre.
+import { getImage } from "astro:assets";
+import logo from "../assets/brand/mybrain-logo-hd.png";
+
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+
+const C = 280; // centre of the 560 × 560 artboard
+// Top-left arrow; the other three are rotations of it.
+const arrow = "M4 4 Q136 12 268 10 L176 44 L280 280 L44 176 L10 268 Q12 136 4 4 Z";
+const quads = [
+  { key: "reasoning", label: "REASONING", rot: 0, dark: "#6b2a8e", light: "#d4bfe2", angle: -135 },
+  { key: "spontaneous", label: "SPONTANEOUS", rot: 90, dark: "#0a74c4", light: "#b9dcf3", angle: -45 },
+  { key: "feeling", label: "FEELING", rot: 180, dark: "#f07a12", light: "#fde0c2", angle: 45 },
+  { key: "specific", label: "SPECIFIC", rot: 270, dark: "#7a1c10", light: "#d8b2a8", angle: 135 },
+];
+// Label arcs: top labels run clockwise (letters face out), bottom labels counter-clockwise so they stay upright.
+const arc = (angle: number) => {
+  const top = angle < 0;
+  const r = top ? 240 : 258;
+  const a1 = ((angle + (top ? -45 : 45)) * Math.PI) / 180;
+  const a2 = ((angle + (top ? 45 : -45)) * Math.PI) / 180;
+  const p = (a: number) => `${(C + r * Math.cos(a)).toFixed(1)} ${(C + r * Math.sin(a)).toFixed(1)}`;
+  return `M${p(a1)} A${r} ${r} 0 0 ${top ? 1 : 0} ${p(a2)}`;
+};
+const uid = Math.random().toString(36).slice(2, 7);
+const logoImg = await getImage({ src: logo, width: 464, format: "png" });
+---
+<svg viewBox="0 0 560 560" class={cls} role="img" aria-label="Empat kuadran MyBrain: Reasoning, Spontaneous, Feeling, Specific">
+  <defs>
+    {quads.map((q) => (
+      <linearGradient id={`g-${q.key}-${uid}`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color={q.dark} />
+        <stop offset="0.85" stop-color={q.light} />
+      </linearGradient>
+    ))}
+    {quads.map((q) => <path id={`a-${q.key}-${uid}`} d={arc(q.angle)} />)}
+  </defs>
+  {quads.map((q) => (
+    <g class="q" data-quad={q.key}>
+      <path d={arrow} transform={`rotate(${q.rot} ${C} ${C})`} fill={`url(#g-${q.key}-${uid})`} />
+      <text font-family="Poppins, Arial, sans-serif" font-size="25" font-weight="700" letter-spacing="1.5" fill="#fff" text-anchor="middle">
+        <textPath href={`#a-${q.key}-${uid}`} startOffset="50%">{q.label}</textPath>
+      </text>
+    </g>
+  ))}
+  <circle cx={C} cy={C} r="114" fill="#222d5d" />
+  <image href={logoImg.src} x={C - 116} y={C - 116} width="232" height="232" />
+</svg>
