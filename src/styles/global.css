@@ -157,3 +157,4 @@ p { text-wrap: pretty; }
   .js [data-reveal] { opacity: 1; transform: none; transition: none; }
   *, *::before, *::after { animation: none !important; }
 }
+.nowrap { white-space: nowrap; }
