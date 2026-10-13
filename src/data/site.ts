@@ -154,7 +154,7 @@ export const services = [
 // Figures from the MyBrain Indonesia / HADE track record.
 export const stats = [
   { value: "2015", label: "Pemegang lisensi resmi MyBrain UK di Indonesia" },
-  { value: "12", label: "Kampus mitra (MoU Center of Agility)" },
+  { value: "12+", label: "Universitas mitra MyBrain bersama Center of Agility" },
   { value: "250+", label: "Perusahaan telah menggunakan MyBrain" },
   { value: "9", label: "Komunitas partner di seluruh Indonesia" },
 ];
