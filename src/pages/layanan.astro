@@ -9,8 +9,9 @@ import { services, wa } from "../data/site";
 
 const audiences = [
   { icon: "user", title: "Individu", text: "Profesional, mahasiswa, dan pelajar yang ingin mengenal potensinya." },
-  { icon: "building", title: "Korporat", text: "Perusahaan & instansi untuk leadership, team alignment, dan talent development." },
+  { icon: "building", title: "Korporat Leader", text: "Perusahaan & instansi untuk leadership, team alignment, dan talent development." },
   { icon: "award", title: "Pendidikan", text: "Kampus, sekolah, dan pesantren — untuk guru, dosen, pengurus, dan siswa." },
+  { icon: "heart", title: "Orang Tua", text: "Ayah & ibu yang ingin memahami cara anak belajar, berkomunikasi, dan menemukan kekuatannya." },
   { icon: "coach", title: "Practitioner", text: "Coach, trainer, HR, dan konselor yang ingin menguasai metode MyBrain." },
 ];
 ---
@@ -133,7 +134,8 @@ const audiences = [
   .head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
   .aud { display: grid; gap: 1.25rem; }
   @media (min-width: 640px) { .aud { grid-template-columns: 1fr 1fr; } }
-  @media (min-width: 1000px) { .aud { grid-template-columns: repeat(4, 1fr); } }
+  @media (min-width: 760px) { .aud { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 1100px) { .aud { grid-template-columns: repeat(5, 1fr); } }
   .aud article { display: grid; gap: 0.6rem; align-content: start; padding: 1.75rem; border-radius: var(--radius); background: #fff; }
   .aud :global(svg) { color: var(--orange); }
   .aud h3 { font-size: 1.15rem; }
