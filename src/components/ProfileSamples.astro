@@ -1,39 +1,41 @@
 ---
-// Sample Individual & Team profiles, cropped as-is from the company profile slide ("Brain Instrument").
-import { Image } from "astro:assets";
-import individual from "../assets/photos/profile-individual.jpg";
-import team from "../assets/photos/profile-team.jpg";
+// Sample Individual & Team profiles — the client's own files, served untouched (no resizing or re-encoding).
+// Shown side by side at the same height and never wider than their native pixels, so they stay sharp.
+import individual from "../assets/photos/profile-individual-original.png";
+import team from "../assets/photos/profile-team-original.png";
 ---
-<div class="samples">
-  <figure class="card">
-    <Image
-      src={individual}
-      alt="Contoh Individual Profile MyBrain: Reasoning 32%, Spontaneous 35%, Specific 19%, Feeling 14%"
-      widths={[500, 900, 1400]}
-      sizes="(min-width: 900px) 34vw, 90vw"
-    />
-    <figcaption>Komposisi dominansi satu orang</figcaption>
-  </figure>
-
-  <figure class="card">
-    <Image
-      src={team}
-      alt="Contoh Team Profile MyBrain: profil tim di atas otak dan grafik sebaran skor Reasoning, Spontaneous, Specific, dan Feeling untuk seluruh anggota tim"
-      widths={[700, 1200, 2000]}
-      sizes="(min-width: 900px) 56vw, 90vw"
-    />
-    <figcaption>Sebaran kuadran seluruh anggota tim</figcaption>
-  </figure>
+<div class="samples" style={`--wi:${individual.width}; --wt:${team.width}`}>
+  <img
+    src={individual.src}
+    width={individual.width}
+    height={individual.height}
+    loading="lazy"
+    alt="Contoh Individual Profile MyBrain: Personal Profile dan Professional Profile berdampingan"
+  />
+  <img
+    src={team.src}
+    width={team.width}
+    height={team.height}
+    loading="lazy"
+    alt="Contoh Team Profile MyBrain: profil tim di atas otak dan grafik sebaran skor Reasoning, Spontaneous, Specific, dan Feeling"
+  />
 </div>
 
 <style>
-  .samples { display: grid; gap: 1.25rem; align-items: start; }
-  @media (min-width: 900px) { .samples { grid-template-columns: 1fr 1.65fr; } }
-  .card {
-    display: grid; gap: 1rem; margin: 0;
-    padding: clamp(1rem, 2.5vw, 1.75rem); border-radius: var(--radius-lg);
-    background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow);
+  .samples { display: grid; gap: 1.25rem; justify-items: center; }
+  .samples img { width: 100%; height: auto; display: block; }
+  .samples img:first-child { max-width: calc(var(--wi) * 1px); }
+  .samples img:last-child { max-width: calc(var(--wt) * 1px); }
+  /* Side by side: flex-grow proportional to each file's width keeps both at the same height,
+     and the row is capped at the files' combined native width so nothing is upscaled. */
+  @media (min-width: 900px) {
+    .samples {
+      display: flex; align-items: flex-start; gap: 1.25rem;
+      max-width: calc((var(--wi) + var(--wt)) * 1px + 1.25rem);
+      margin-inline: auto;
+    }
+    .samples img { min-width: 0; flex-basis: 0; }
+    .samples img:first-child { flex-grow: var(--wi); }
+    .samples img:last-child { flex-grow: var(--wt); }
   }
-  .card :global(img) { width: 100%; height: auto; }
-  figcaption { font-size: 0.85rem; color: var(--muted); text-align: center; }
 </style>

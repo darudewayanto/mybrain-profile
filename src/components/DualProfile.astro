@@ -1,15 +1,14 @@
 ---
-// Personal vs Professional profile sample, as-is from the sales playbook.
-import { Image } from "astro:assets";
-import sample from "../assets/photos/profile-personal-professional.png";
+// Personal vs Professional profile sample — the client's own file, served untouched at native size.
+import sample from "../assets/photos/profile-individual-original.png";
 ---
 <figure class="dual">
-  <Image src={sample} alt="Contoh hasil MyBrain: Personal Profile dan Professional Profile berdampingan" width={340} />
+  <img src={sample.src} width={sample.width} height={sample.height} loading="lazy" alt="Contoh hasil MyBrain: Personal Profile dan Professional Profile berdampingan" />
   <figcaption>Profil yang sama bisa muncul berbeda di konteks personal dan profesional.</figcaption>
 </figure>
 
 <style>
-  .dual { display: grid; gap: 0.5rem; margin: 0.25rem 0 0; max-width: 340px; }
-  .dual :global(img) { width: 100%; height: auto; }
+  .dual { display: grid; gap: 0.5rem; margin: 0.25rem 0 0; max-width: 508px; }
+  .dual img { width: 100%; height: auto; display: block; }
   figcaption { font-size: 0.78rem; color: var(--muted); }
 </style>

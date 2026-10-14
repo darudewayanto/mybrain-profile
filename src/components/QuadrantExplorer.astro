@@ -47,12 +47,22 @@ const pos = { reasoning: "tl", spontaneous: "tr", specific: "bl", feeling: "br" 
 
   .art { position: relative; width: min(100%, 440px); justify-self: center; }
   .art :global(.art-svg) { width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 20px 30px rgba(15, 19, 51, 0.18)); }
-  /* Dim the quadrants that are not selected. */
-  .art :global(.q) { transition: opacity 0.35s var(--ease); }
+  /* Selected quadrant grows outward from the centre, deepens and lifts; the others fade to grey. */
+  .art :global(.q) {
+    transform-origin: 280px 280px;
+    transition: opacity 0.35s var(--ease), transform 0.45s var(--ease), filter 0.35s var(--ease);
+  }
+  .qx[data-active="reasoning"] .art :global(.q[data-quad="reasoning"]),
+  .qx[data-active="spontaneous"] .art :global(.q[data-quad="spontaneous"]),
+  .qx[data-active="specific"] .art :global(.q[data-quad="specific"]),
+  .qx[data-active="feeling"] .art :global(.q[data-quad="feeling"]) {
+    transform: scale(1.07);
+    filter: saturate(1.5) brightness(0.92) drop-shadow(0 10px 14px rgba(15, 19, 51, 0.35));
+  }
   .qx[data-active="reasoning"] .art :global(.q:not([data-quad="reasoning"])),
   .qx[data-active="spontaneous"] .art :global(.q:not([data-quad="spontaneous"])),
   .qx[data-active="specific"] .art :global(.q:not([data-quad="specific"])),
-  .qx[data-active="feeling"] .art :global(.q:not([data-quad="feeling"])) { opacity: 0.4; }
+  .qx[data-active="feeling"] .art :global(.q:not([data-quad="feeling"])) { opacity: 0.28; filter: grayscale(0.85); }
   .hot {
     position: absolute;
     width: 40%; height: 40%;
