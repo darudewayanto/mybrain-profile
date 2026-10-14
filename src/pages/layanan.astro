@@ -4,6 +4,7 @@ import PageHero from "../components/PageHero.astro";
 import Badge from "../components/Badge.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Icon from "../components/Icon.astro";
+import ClientWall from "../components/ClientWall.astro";
 import { services, wa } from "../data/site";
 
 const audiences = [
@@ -75,7 +76,18 @@ const audiences = [
     </div>
   </section>
 
-  <CtaBand from="var(--cream)" title="Belum yakin program mana yang tepat?" text="Konsultasikan kebutuhan Anda secara gratis. Kami bantu merekomendasikan layanan yang paling sesuai — untuk diri sendiri, tim, atau organisasi." />
+  <section class="section">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <p class="eyebrow t-olive">Dipercaya oleh</p>
+        <h2 class="h2">Klien ekosistem <span class="t-navy">MyBrain Indonesia</span> &amp; HADE</h2>
+        <p class="lead">Dari BUMN dan kementerian hingga perusahaan global — sebagian organisasi yang telah bekerja bersama kami.</p>
+      </div>
+      <div data-reveal><ClientWall /></div>
+    </div>
+  </section>
+
+  <CtaBand from="var(--paper)" title="Belum yakin program mana yang tepat?" text="Konsultasikan kebutuhan Anda secara gratis. Kami bantu merekomendasikan layanan yang paling sesuai — untuk diri sendiri, tim, atau organisasi." />
 </Base>
 
 <style>

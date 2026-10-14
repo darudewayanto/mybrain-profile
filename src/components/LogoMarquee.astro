@@ -1,0 +1,62 @@
+---
+// Two counter-scrolling rows of client logos (after the HADE site), restyled for MyBrain.
+import Img from "./Img.astro";
+import { clientImg } from "../lib/assets";
+import { clientLogos } from "../data/site";
+
+const logos = clientLogos.filter((n) => clientImg[n]);
+const half = Math.ceil(logos.length / 2);
+const rows = [logos.slice(0, half), logos.slice(half)];
+---
+<div class="marquee" aria-label="Klien kami">
+  {rows.map((row, i) => (
+    <div class:list={["track", { reverse: i === 1 }]}>
+      {[0, 1].map((dup) => (
+        <ul role="list" aria-hidden={dup === 1 ? "true" : undefined}>
+          {row.map((n) => (
+            <li><Img src={clientImg[n]} alt={dup ? "" : n.replace(/-/g, " ")} height={56} /></li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  ))}
+</div>
+
+<style>
+  .marquee {
+    display: grid;
+    gap: 1rem;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .track { display: flex; width: max-content; animation: slide 60s linear infinite; }
+  .track.reverse { animation-direction: reverse; animation-duration: 70s; }
+  .marquee:hover .track { animation-play-state: paused; }
+  ul { display: flex; gap: 1rem; padding-right: 1rem; }
+  li {
+    width: 176px;
+    height: 92px;
+    display: grid;
+    place-items: center;
+    padding: 1rem 1.5rem;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 1px 2px rgba(15, 19, 51, 0.05), 0 10px 24px -16px rgba(15, 19, 51, 0.25);
+  }
+  li :global(img) {
+    max-height: 46px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1) contrast(1.05);
+    opacity: 0.7;
+    transition: filter 0.3s, opacity 0.3s;
+  }
+  li:hover :global(img) { filter: none; opacity: 1; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .track { animation: none; flex-wrap: wrap; width: auto; }
+    ul[aria-hidden] { display: none; }
+    ul { flex-wrap: wrap; justify-content: center; }
+  }
+</style>

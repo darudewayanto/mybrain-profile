@@ -6,6 +6,7 @@ import Badge from "../components/Badge.astro";
 import QuadrantExplorer from "../components/QuadrantExplorer.astro";
 import CtaBand from "../components/CtaBand.astro";
 import Testimonials from "../components/Testimonials.astro";
+import LogoMarquee from "../components/LogoMarquee.astro";
 import { u } from "../lib/url";
 import { wa, services, stats, problems } from "../data/site";
 
@@ -181,6 +182,17 @@ const steps = [
     </div>
   </section>
 
+  <!-- ============ CLIENTS + TESTIMONIALS ============ -->
+  <section class="clients">
+    <div class="wrap clients-head" data-reveal>
+      <div>
+        <p class="eyebrow">Dipercaya oleh</p>
+        <h2 class="h2">Klien ekosistem <span class="t-navy">MyBrain Indonesia</span> &amp; HADE</h2>
+      </div>
+      <p class="lead">BUMN, kementerian, hingga perusahaan global telah mempercayakan pengembangan leader dan timnya kepada kami.</p>
+    </div>
+    <LogoMarquee />
+  </section>
   <Testimonials />
 
   <!-- ============ STATS ============ -->
@@ -333,6 +345,13 @@ const steps = [
   .lens:hover :global(.lens-card) { transform: translateY(-8px); box-shadow: var(--shadow); }
   .lens figcaption { display: grid; gap: 0.2rem; font-size: 0.88rem; color: var(--ink-soft); }
   .lens strong { color: var(--ink); font-size: 1rem; }
+
+  /* ---------- Clients ---------- */
+  .clients { background: var(--cream); padding-block: var(--section) clamp(2rem, 4vw, 3rem); }
+  .clients-head { display: grid; gap: 1rem 3rem; align-items: end; margin-bottom: clamp(2rem, 4vw, 3rem); }
+  .clients-head .eyebrow { color: var(--olive-deep); margin-bottom: 0.75rem; }
+  .clients-head .h2 { max-width: 18ch; }
+  @media (min-width: 960px) { .clients-head { grid-template-columns: 1.2fr 1fr; } }
 
   /* ---------- Steps ---------- */
   .step-grid { display: grid; gap: 1.25rem; counter-reset: s; }

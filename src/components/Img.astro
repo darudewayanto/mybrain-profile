@@ -1,0 +1,8 @@
+---
+// Wraps astro:assets <Image> so fixed-size images (logos, badges) also ship a 2x
+// variant for retina screens. Images that pass `widths` or `densities` keep them.
+import { Image } from "astro:assets";
+const props = Astro.props as any;
+const extra = props.widths || props.densities ? {} : { densities: [1, 2] };
+---
+<Image {...props} {...extra} />

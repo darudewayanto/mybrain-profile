@@ -1,0 +1,45 @@
+---
+// Static grid of every client logo, in full colour — a calmer counterpart to the home-page marquee.
+import Img from "./Img.astro";
+import { clientImg } from "../lib/assets";
+import { clientLogos } from "../data/site";
+
+const logos = clientLogos.filter((n) => clientImg[n]);
+---
+<ul role="list" class="wall" aria-label="Klien kami">
+  {logos.map((n, i) => (
+    <li style={`--i:${i}`}><Img src={clientImg[n]} alt={n.replace(/-/g, " ")} height={56} /></li>
+  ))}
+</ul>
+
+<style>
+  /* Wrapping tiles, centred, so an uneven last row still looks intentional. */
+  .wall {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+  li {
+    --cols: 2;
+    flex: 0 0 calc((100% - (var(--cols) - 1) * 0.75rem) / var(--cols));
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    padding: 0.9rem 1.1rem;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s var(--ease);
+  }
+  li:hover { border-color: transparent; box-shadow: var(--shadow); transform: translateY(-3px); }
+  li :global(img) {
+    max-height: 42px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+  }
+  /* 31 logos: 8 per row on desktop → 8 · 8 · 8 · 7. */
+  @media (min-width: 560px) { li { --cols: 4; } }
+  @media (min-width: 1000px) { li { --cols: 8; } }
+</style>
