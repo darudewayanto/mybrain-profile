@@ -1,0 +1,68 @@
+---
+// Testimonials section. Only quotes the person has approved are rendered in production;
+// in local dev, drafts are shown too (marked DRAFT) so the wording can be reviewed in place.
+import Icon from "./Icon.astro";
+import { testimonials } from "../data/site";
+
+const dev = import.meta.env.DEV;
+const items = testimonials.filter((t) => t.approved || dev);
+const initials = (name: string) => name.split(" ").map((w) => w[0]).slice(0, 2).join("");
+---
+{items.length > 0 && (
+  <section class="section testi">
+    <div class="wrap">
+      <div class="head" data-reveal>
+        <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <h2 class="h2">Kata mereka tentang <span class="t-orange">MyBrain</span></h2>
+      </div>
+      <div class="grid">
+        {items.map((t) => (
+          <figure class="card" style={`--c:${t.color}`} data-reveal>
+            {!t.approved && <span class="draft">DRAFT · belum disetujui</span>}
+            <span class="angle">{t.angle}</span>
+            <Icon name="quote" size={34} class="mark" />
+            <blockquote>{t.quote}</blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">{initials(t.name)}</span>
+              <span><strong>{t.name}</strong><small>{t.role}</small></span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .testi { background: var(--cream); }
+  .head { display: grid; gap: 1rem; margin-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+  .grid { display: grid; gap: 1.25rem; }
+  @media (min-width: 960px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    position: relative; margin: 0;
+    display: grid; gap: 1rem; align-content: start;
+    padding: 2rem 1.75rem 1.75rem;
+    border-radius: var(--radius-lg); background: #fff;
+    border-top: 8px solid var(--c);
+    box-shadow: var(--shadow);
+  }
+  .angle {
+    justify-self: start; padding: 0.3rem 0.85rem; border-radius: 999px;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c);
+  }
+  .card :global(.mark) { color: var(--c); }
+  blockquote { margin: 0; font-size: 0.98rem; line-height: 1.7; color: var(--ink-soft); }
+  figcaption { display: flex; align-items: center; gap: 0.85rem; margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--line); }
+  .avatar {
+    flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%;
+    background: var(--c); color: #fff; font-weight: 800; font-size: 0.95rem;
+  }
+  figcaption strong { display: block; font-weight: 800; }
+  figcaption small { display: block; font-size: 0.82rem; color: var(--muted); line-height: 1.35; }
+  .draft {
+    position: absolute; top: 0.9rem; right: 1rem;
+    padding: 0.2rem 0.6rem; border-radius: 6px; background: #c0392b; color: #fff;
+    font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em;
+  }
+</style>

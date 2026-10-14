@@ -184,5 +184,37 @@ export const problems = [
   },
 ];
 
-// Filled in once testimonials are approved by the people quoted.
-export const testimonials: { quote: string; name: string; role: string }[] = [];
+// Testimonials are drafts written for each person to review. Set `approved: true` only after that
+// person has confirmed the exact wording in writing — unapproved ones never appear on the live site
+// (they show in local dev only, marked DRAFT).
+export type Testimonial = { quote: string; name: string; role: string; angle: string; color: string; approved: boolean };
+
+export const testimonials: Testimonial[] = [
+  {
+    angle: "Leadership",
+    color: "var(--q-reasoning)",
+    name: "Diana Suciati",
+    role: "VP Human Resource",
+    quote:
+      "MyBrain memberi para leader kami bahasa baru untuk memahami tim. Mereka jadi tahu bagaimana energi dan motivasi setiap anggota tim bekerja, sehingga cara memberi arahan, delegasi, dan feedback jauh lebih tepat sasaran. Pendampingan tim MyBrain Indonesia juga sangat profesional. Saya merekomendasikan MyBrain untuk organisasi yang serius mengembangkan kepemimpinan.",
+    approved: false,
+  },
+  {
+    angle: "Parenting",
+    color: "var(--q-feeling)",
+    name: "Intan Erlita",
+    role: "Psikolog, Public Figure & Entrepreneur",
+    quote:
+      "Yang saya suka dari MyBrain: pendekatannya berbasis sains dan netral — tidak memberi label, tapi membantu memahami. Bagi orang tua, ini membuka mata bahwa anak yang terlihat ‘berantakan’ atau ‘susah diatur’ sering kali hanya memproses dunia dengan cara yang berbeda. Dari situ, cara mendampingi belajar dan berkomunikasi dengan anak bisa jauh lebih tepat. Sangat saya rekomendasikan untuk keluarga.",
+    approved: false,
+  },
+  {
+    angle: "Communication",
+    color: "var(--q-spontaneous)",
+    name: "Muhammad Yanuar",
+    role: "Penasihat Ahli Menteri Ekonomi Kreatif",
+    quote:
+      "Komunikasi yang efektif dimulai dari memahami bagaimana lawan bicara memproses informasi. MyBrain membuat hal itu konkret: ada yang butuh data, ada yang butuh gambaran besar, ada yang butuh kejelasan langkah, dan ada yang butuh koneksi personal. Insight ini sangat berguna untuk kolaborasi lintas pihak. Saya merekomendasikan MyBrain — baik profilingnya maupun tim MyBrain Indonesia sebagai mitra pengembangan.",
+    approved: false,
+  },
+];
